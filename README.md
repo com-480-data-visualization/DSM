@@ -22,6 +22,12 @@ We chose to get our data from the [Semantic Scholar API](https://www.semanticsch
 
 The API being a reliable source, the data is of high quality and there will be minimal data-cleaning. We will use a Python script to download all needed data at once.
 
+Additional datasets, which are well-structured, provide insights into how papers reference one another and include citation counts:
+* https://www.aminer.cn/citation
+* https://www.kaggle.com/datasets/mathurinache/citation-network-dataset (same as above, but the data can be downloaded faster)
+* https://dblp.org/
+* https://snap.stanford.edu/data/com-DBLP.html
+
 ### Problematic
 As students, we often struggle to identify key research papers that define our field or keep up with the latest trends. Without proper guidance, it is difficult to find the foundational or high-impact papers, especially in rapidly evolving fields such as Computer Science and Physics. 
 
@@ -31,19 +37,16 @@ Our visualizations will show a citation network graph to demonstrate how papers 
 It will also be possible to see the most popular papers for each year. This will highlight any trend changes in specific fields. 
 Similar techniques will help gain insights on authors, their collaboration network and influence; allowing us to discover the top researchers and key collaborations in a field. 
 
-TODO: Some viz with the venues ? Like most popular venues ?
-TODO: Maybe some interdisciplinary visualizations ? Links between medicine papers and CS papers ?
-TODO: Maybe compare open source (Arxiv) vs restricted access research ? Across discplines too ?
-
 The platform can be useful for anyone from new students to curious individuals who would like to learn more about advancements accross the different fields. 
 
 ### Exploratory Data Analysis
 Basic insights using the dataset can be found in [EDA.ipynb](https://github.com/com-480-data-visualization/DSM/blob/master/EDA.ipynb).
 
 ### Related work
-Multiple platforms such as Google Scholar and Semantic Scholar provide free access to research papers. Our project focuses on aggregating the most important information such that a newcomer is able to grasp the ABC's of their research field of interest.
+Multiple platforms such as Google Scholar and Semantic Scholar provide free access to research papers. 
+Instead of being a search engine we focus on on aggregating the most important information such that a newcomer is able to grasp the ABC's of their research field of interest. 
 
-TODO: where do we take inspiration from for our visualizations ?
+[Prof. Mathias Payer](https://nebelwelt.net/pubstats/) also used the DBLP dataset to count the number of publications a professor has made and to identify with whom they have collaborated (forming so-called cliques). We focus less on the professors and more on the actual papers, which are relevant to a specific subfield of computer science or another area of science.
 
 ## Milestone 2 (18th April, 5pm)
 

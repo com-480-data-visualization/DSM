@@ -18,29 +18,32 @@ Please, fill the following sections about your project.
 *(max. 2000 characters per section)*
 
 ### Dataset
+We chose to get our data from the [Semantic Scholar API](https://www.semanticscholar.org/product/api) which provides scientification publication data via an API. We will get fields such as the title of the paper, abstract, year of publication, citation count, venue and fields of study (e.g. mathematics, physics, computer science etc.). Each query needs to be provided a "query" parameter and it is possible to filter the results using the fields. 
 
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)), you could use also the DataSets proposed by the ENAC (see the Announcements section on Zulip).
+The API being a reliable source, the data is of high quality and there will be minimal data-cleaning. We will use a Python script to download all needed data at once.
 
 ### Problematic
+As students, we often struggle to identify key research papers that define our field or keep up with the latest trends. Without proper guidance, it is difficult to find the foundational or high-impact papers, especially in rapidly evolving fields such as Computer Science and Physics. 
 
-> Frame the general topic of your visualization and the main axis that you want to develop.
-> - What am I trying to show with my visualization?
-> - Think of an overview for the project, your motivation, and the target audience.
+Our goal is to create a website that allows users to explore and dive deep into the most relevant research papers in their area of interest.
+
+Our visualizations will show a citation network graph to demonstrate how papers are connected to each other which will allow us to identify the most influential contributions. The publication year will distinguish the foundational papers on the one hand and the current trends on the other hand. Our tool will make it easy for the users to access key information such as the abstract of the resulting papers. 
+It will also be possible to see the most popular papers for each year. This will highlight any trend changes in specific fields. 
+Similar techniques will help gain insights on authors, their collaboration network and influence; allowing us to discover the top researchers and key collaborations in a field. 
+
+TODO: Some viz with the venues ? Like most popular venues ?
+TODO: Maybe some interdisciplinary visualizations ? Links between medicine papers and CS papers ?
+TODO: Maybe compare open source (Arxiv) vs restricted access research ? Across discplines too ?
+
+The platform can be useful for anyone from new students to curious individuals who would like to learn more about advancements accross the different fields. 
 
 ### Exploratory Data Analysis
-
-> Pre-processing of the data set you chose
-> - Show some basic statistics and get insights about the data
+Basic insights using the dataset can be found in [EDA.ipynb](https://github.com/com-480-data-visualization/DSM/blob/master/EDA.ipynb).
 
 ### Related work
+Multiple platforms such as Google Scholar and Semantic Scholar provide free access to research papers. Our project focuses on aggregating the most important information such that a newcomer is able to grasp the ABC's of their research field of interest.
 
-
-> - What others have already done with the data?
-> - Why is your approach original?
-> - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
-> - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+TODO: where do we take inspiration from for our visualizations ?
 
 ## Milestone 2 (18th April, 5pm)
 

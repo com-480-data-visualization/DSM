@@ -51,6 +51,9 @@ Instead of being a search engine we focus on on aggregating the most important i
 ## Milestone 2 (18th April, 5pm)
 
 **10% of the final grade**
+The deliverables for milestone 2 can be found here:
+- [**📄 PDF**](sketchbook/milestone2.pdf)
+- [**🌐 Functional prototype**](https://com-480-data-visualization.github.io/DSM/)
 
 
 ## Milestone 3 (30th May, 5pm)

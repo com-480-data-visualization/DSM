@@ -9,12 +9,29 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: website/src
+
+      - name: Run prettier
+        run: npx prettier . --check
+        working-directory: website
+
+      - name: Build Tailwind CSS
+        run: npm run build
+        working-directory: website/src
+
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          folder: website
+          folder: website/src
           clean: true
           clean-exclude: |
             .nojekyll

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Research Visualizer | Academic Insights</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <style>
+    .header-gradient {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+    }
+
+    .card {
+      @apply bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1;
+    }
+
+    .card-icon {
+      @apply h-40 bg-blue-500 flex items-center justify-center;
+    }
+  </style>
+
+  <body class="flex flex-col min-h-full">
+    <header class="header-gradient text-white py-10">
+      <div class="container mx-auto px-10">
+        <h1 class="font-bold text-6xl">
+          <i class="fas fa-graduation-cap"></i> Research Visualizer
+        </h1>
+        <p class="text-2xl py-8">
+          Discover academic trends, influential papers, and emerging subfields
+          with our interactive visualization tools
+        </p>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <!-- Your main content here -->
+      <div class="container mx-auto px-6 mt-16">
+        <h2 class="text-2xl font-bold text-gray-800">
+          Explore Popular Research Fields
+        </h2>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+      <div class="container mx-auto px-6">
+        <p class="py-2">
+          Done as part of
+          <a
+            href="https://edu.epfl.ch/coursebook/en/data-visualization-COM-480"
+            class="underline"
+          >
+            COM-480 Data visualization </a
+          >.
+        </p>
+        <p>Made with ♥ by Syrine Noamen, Mariem Baccari and Daniel Bucher.</p>
+      </div>
+    </footer>
+  </body>
+</html>

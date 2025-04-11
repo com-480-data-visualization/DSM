@@ -2,13 +2,14 @@
 <html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
-    <title>Research Visualizer | Academic Insights</title>
+    <title>Computer Science Research Visualizer | Academic Insights</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="output.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
 
   <style>
@@ -29,7 +30,7 @@
     <header class="header-gradient text-white py-10">
       <div class="container mx-auto px-10">
         <h1 class="font-bold text-6xl">
-          <i class="fas fa-graduation-cap"></i> Research Visualizer
+          <i class="fas fa-graduation-cap"></i> Computer Science Research Visualizer
         </h1>
         <p class="text-2xl py-8">
           Discover academic trends, influential papers, and emerging subfields
@@ -39,11 +40,25 @@
     </header>
 
     <main class="flex-1">
-      <!-- Your main content here -->
       <div class="container mx-auto px-6 mt-16">
-        <h2 class="text-2xl font-bold text-gray-800">
-          Explore Popular Research Fields
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+          The top 5 most cited papers in Computer Science are:
         </h2>
+    
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div id="top-papers" class="space-y-4"></div>
+    
+          <div id="paper-details" class="bg-white p-6 rounded-xl shadow-md hidden">
+            <h3 class="text-xl font-bold text-gray-800 mb-2" id="detail-title"></h3>
+            <p class="text-gray-600 mb-2" id="detail-authors"></p>
+            <p class="text-gray-700" id="detail-abstract"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mx-auto px-6 my-20">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Top Authors by Total Citations</h2>
+        <svg id="chart-authors" width="500" height="400"></svg>
       </div>
     </main>
 
@@ -61,5 +76,7 @@
         <p>Made with ♥ by Syrine Noamen, Mariem Baccari and Daniel Bucher.</p>
       </div>
     </footer>
+    <script src="most_cited_papers.js"></script>
+    <script src="authors_charts.js"></script>
   </body>
 </html>

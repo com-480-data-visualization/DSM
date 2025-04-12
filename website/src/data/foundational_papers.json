@@ -1,0 +1,168 @@
+[
+  {
+    "title": "On Computable Numbers, with an Application to the Entscheidungsproblem.",
+    "summary": "Alan Turing introduced the concept of a 'universal machine', laying the foundation for theoretical computer science and defining the limits of computation.",
+    "year": 1937,
+    "citationCount": 8312,
+    "authors": [
+      "A. Turing"
+    ],
+    "fieldsOfStudy": [
+      "Mathematics"
+    ],
+    "paperId": "ab7790485f26ce65f9d83dd700c43e49058bdd2b"
+  },
+  {
+    "title": "A mathematical theory of communication",
+    "summary": "Claude Shannon founded information theory, introducing entropy, channel capacity, and data compression \u2014 core to digital communication and storage.",
+    "year": 1948,
+    "citationCount": 30573,
+    "authors": [
+      "C. Shannon"
+    ],
+    "fieldsOfStudy": [
+      "Mathematics",
+      "Computer Science"
+    ],
+    "paperId": "a54194422c56399b2923b2ad706b8175c8c48258"
+  },
+  {
+    "title": "A relational model of data for large shared data banks",
+    "summary": "Edgar F. Codd proposed the relational database model, transforming how structured data is stored and queried using tables and formal logic.",
+    "year": 1970,
+    "citationCount": 2231,
+    "authors": [
+      "By E. F. Codd"
+    ],
+    "fieldsOfStudy": [
+      "Medicine",
+      "Computer Science"
+    ],
+    "paperId": "d798cb0ef57f71958e900c2a95723b7ef1ff2a34"
+  },
+  {
+    "title": "The complexity of theorem-proving procedures",
+    "summary": "Stephen Cook introduced NP-completeness and formalized the P vs NP problem, becoming a cornerstone of computational complexity theory.",
+    "year": 1971,
+    "citationCount": 7227,
+    "authors": [
+      "S. Cook"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Mathematics"
+    ],
+    "paperId": "1a8d2e5bb9c646d85308fbd6ce33fce8765e2c26"
+  },
+  {
+    "title": "A protocol for packet network intercommunication",
+    "summary": "Vint Cerf and Bob Kahn introduced TCP/IP, enabling scalable and robust communication across packet-switched networks \u2014 the foundation of the Internet.",
+    "year": 1974,
+    "citationCount": 711,
+    "authors": [
+      "V. Cerf",
+      "R. Kahn"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "c2cf2d1ad8d5be4ce37857bcb6b7f48e74894b4f"
+  },
+  {
+    "title": "Information Management: A Proposal",
+    "summary": "Tim Berners-Lee proposed the World Wide Web, including URLs, HTTP, and HTML \u2014 a blueprint that led to the creation of the modern web.",
+    "year": 1990,
+    "citationCount": 601,
+    "authors": [
+      "Tim Berners-Lee"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "b446cd6a9218bed4beca1027174315e8e8258442"
+  },
+  {
+    "title": "The Anatomy of a Large-Scale Hypertextual Web Search Engine",
+    "summary": "Page and Brin introduced Google and the PageRank algorithm, revolutionizing web search by ranking pages based on importance and structure.",
+    "year": 1998,
+    "citationCount": 16828,
+    "authors": [
+      "Sergey Brin",
+      "Lawrence Page"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "10d6778bc45aebcd58d336b4062b935861d2fe8a"
+  },
+  {
+    "title": "Recursive Functions of Symbolic Expressions and their Computation by Machine",
+    "summary": "John McCarthy introduced Lisp and recursion in computing, laying the groundwork for symbolic AI and functional programming.",
+    "year": 1959,
+    "citationCount": 235,
+    "authors": [
+      "John McCarthy"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "0f6435014abf77f374551dbf30ece27744292ea3"
+  },
+  {
+    "title": "Letters to the editor: go to statement considered harmful",
+    "summary": "Edsger W. Dijkstra famously criticized 'goto', advocating for structured programming \u2014 a shift that influenced modern programming languages.",
+    "year": 1968,
+    "citationCount": 862,
+    "authors": [
+      "E. Dijkstra"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "7ef3766046c0f3331607f5e965f79c3eb9d7dd7a"
+  },
+  {
+    "title": "Time, clocks, and the ordering of events in a distributed system",
+    "summary": "Leslie Lamport introduced logical clocks and causal ordering, essential for consistency and coordination in distributed systems.",
+    "year": 1978,
+    "citationCount": 10243,
+    "authors": [
+      "L. Lamport"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "593619c2a69391454eae1f5ebe75fb8fc7e77e9d"
+  },
+  {
+    "title": "No Silver Bullet: Essence and Accidents of Software Engineering",
+    "summary": "Fred Brooks argued that no single breakthrough will solve software engineering challenges, emphasizing the complexity of software design.",
+    "year": 1987,
+    "citationCount": 3393,
+    "authors": [
+      "F. Brooks"
+    ],
+    "fieldsOfStudy": null,
+    "paperId": "ed0759b7001f8be53bb4282750e98198b359307d"
+  },
+  {
+    "title": "Attention is All you Need",
+    "summary": "Vaswani et al. introduced the Transformer architecture, changing the landscape of NLP and enabling models like BERT and GPT.",
+    "year": 2017,
+    "citationCount": 122103,
+    "authors": [
+      "Ashish Vaswani",
+      "Noam M. Shazeer",
+      "Niki Parmar",
+      "Jakob Uszkoreit",
+      "Llion Jones",
+      "Aidan N. Gomez",
+      "Lukasz Kaiser",
+      "Illia Polosukhin"
+    ],
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "paperId": "204e3073870fae3d05bcbc2f6a8e263d9b72e776"
+  }
+]

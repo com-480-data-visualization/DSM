@@ -1,4 +1,5 @@
-d3.csv("cs_conference_journals.csv").then(data => {
+// TODO change with new data 
+d3.csv("data/cs_conference_journals.csv").then(data => { //todo add possibility to change number of papers 
     data.forEach(d => d.citationCount = +d.citationCount);
 
     const topPapers = data.sort((a, b) => b.citationCount - a.citationCount).slice(0, 5);

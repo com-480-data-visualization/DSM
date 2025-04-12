@@ -86,12 +86,10 @@
     <!-- Hero Section -->
     <section class="gradient-bg text-white py-20">
       <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6">
-          Explore Research Fields Visually
-        </h1>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Explore Research Fields Visually</h1>
         <p class="text-xl md:text-2xl mb-8">
-          Discover academic trends, influential papers, and emerging subfields
-          with our interactive visualization tools
+          Discover academic trends, influential papers, and emerging subfields with our interactive
+          visualization tools
         </p>
         <div class="max-w-2xl mx-auto relative">
           <!-- <input type="text" id="searchInput" placeholder="Search for a research field (e.g., Machine Learning, Quantum Computing)" class="w-full px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500"> -->
@@ -109,9 +107,7 @@
         <div
           class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mb-4"
         ></div>
-        <p class="text-gray-600">
-          Fetching research data from Semantic Scholar...
-        </p>
+        <p class="text-gray-600">Fetching research data from Semantic Scholar...</p>
       </div>
 
       <!-- Results Section -->
@@ -119,9 +115,7 @@
         <!-- Field Overview -->
         <div class="bg-white rounded-xl shadow-md p-6 mb-8 fade-in">
           <div class="flex justify-between items-center mb-6">
-            <h2 id="fieldTitle" class="text-2xl font-bold text-gray-800">
-              Field Overview
-            </h2>
+            <h2 id="fieldTitle" class="text-2xl font-bold text-gray-800">Field Overview</h2>
             <div class="flex space-x-2">
               <button
                 id="trendsBtn"
@@ -175,9 +169,7 @@
             </div>
             <div class="bg-purple-50 p-6 rounded-lg">
               <div class="flex items-center">
-                <div
-                  class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4"
-                >
+                <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
                   <i class="fas fa-chart-line text-xl"></i>
                 </div>
                 <div>
@@ -190,9 +182,7 @@
 
           <!-- Subfields Tag Cloud -->
           <div class="mb-8">
-            <h3 class="text-xl font-semibold mb-4 text-gray-700">
-              Explore Subfields
-            </h3>
+            <h3 class="text-xl font-semibold mb-4 text-gray-700">Explore Subfields</h3>
             <div id="tagCloud" class="tag-cloud">
               <!-- Tags will be dynamically inserted here -->
             </div>
@@ -200,31 +190,18 @@
         </div>
 
         <!-- Visualization Section -->
-        <div
-          id="visualizationSection"
-          class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12"
-        >
+        <div id="visualizationSection" class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           <!-- Trends Chart -->
-          <div
-            id="trendsChartContainer"
-            class="bg-white rounded-xl shadow-md p-6 fade-in"
-          >
-            <h3 class="text-xl font-semibold mb-4 text-gray-700">
-              Publication Trends Over Time
-            </h3>
+          <div id="trendsChartContainer" class="bg-white rounded-xl shadow-md p-6 fade-in">
+            <h3 class="text-xl font-semibold mb-4 text-gray-700">Publication Trends Over Time</h3>
             <div class="h-80">
               <canvas id="trendsChart"></canvas>
             </div>
           </div>
 
           <!-- Subfields Distribution -->
-          <div
-            id="subfieldsChartContainer"
-            class="bg-white rounded-xl shadow-md p-6 fade-in"
-          >
-            <h3 class="text-xl font-semibold mb-4 text-gray-700">
-              Subfields Distribution
-            </h3>
+          <div id="subfieldsChartContainer" class="bg-white rounded-xl shadow-md p-6 fade-in">
+            <h3 class="text-xl font-semibold mb-4 text-gray-700">Subfields Distribution</h3>
             <div class="h-80">
               <div id="subfieldsChart"></div>
             </div>
@@ -233,26 +210,16 @@
 
         <!-- Top Papers Section -->
         <div id="papersSection" class="hidden">
-          <h2 class="text-2xl font-bold mb-6 text-gray-800">
-            Influential Papers
-          </h2>
-          <div
-            id="papersList"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+          <h2 class="text-2xl font-bold mb-6 text-gray-800">Influential Papers</h2>
+          <div id="papersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Papers will be dynamically inserted here -->
           </div>
         </div>
 
         <!-- Top Authors Section -->
         <div id="authorsSection" class="hidden">
-          <h2 class="text-2xl font-bold mb-6 text-gray-800">
-            Leading Researchers
-          </h2>
-          <div
-            id="authorsList"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
+          <h2 class="text-2xl font-bold mb-6 text-gray-800">Leading Researchers</h2>
+          <div id="authorsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Authors will be dynamically inserted here -->
           </div>
         </div>
@@ -260,9 +227,7 @@
 
       <!-- Popular Fields Section -->
       <div class="mt-16">
-        <h2 class="text-2xl font-bold mb-8 text-gray-800">
-          Explore Popular Research Fields
-        </h2>
+        <h2 class="text-2xl font-bold mb-8 text-gray-800">Explore Popular Research Fields</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div
             class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition transform hover:-translate-y-1"
@@ -272,12 +237,9 @@
               <i class="fas fa-robot text-white text-5xl"></i>
             </div>
             <div class="p-6">
-              <h3 class="font-bold text-xl mb-2 text-gray-800">
-                Artificial Intelligence
-              </h3>
+              <h3 class="font-bold text-xl mb-2 text-gray-800">Artificial Intelligence</h3>
               <p class="text-gray-600">
-                Explore AI research including machine learning, neural networks,
-                and robotics.
+                Explore AI research including machine learning, neural networks, and robotics.
               </p>
             </div>
           </div>
@@ -289,12 +251,9 @@
               <i class="fas fa-atom text-white text-5xl"></i>
             </div>
             <div class="p-6">
-              <h3 class="font-bold text-xl mb-2 text-gray-800">
-                Quantum Computing
-              </h3>
+              <h3 class="font-bold text-xl mb-2 text-gray-800">Quantum Computing</h3>
               <p class="text-gray-600">
-                Discover breakthroughs in quantum algorithms and quantum
-                information theory.
+                Discover breakthroughs in quantum algorithms and quantum information theory.
               </p>
             </div>
           </div>
@@ -306,12 +265,9 @@
               <i class="fas fa-dna text-white text-5xl"></i>
             </div>
             <div class="p-6">
-              <h3 class="font-bold text-xl mb-2 text-gray-800">
-                Biotechnology
-              </h3>
+              <h3 class="font-bold text-xl mb-2 text-gray-800">Biotechnology</h3>
               <p class="text-gray-600">
-                Explore genetic engineering, synthetic biology, and medical
-                applications.
+                Explore genetic engineering, synthetic biology, and medical applications.
               </p>
             </div>
           </div>
@@ -323,12 +279,9 @@
               <i class="fas fa-globe-europe text-white text-5xl"></i>
             </div>
             <div class="p-6">
-              <h3 class="font-bold text-xl mb-2 text-gray-800">
-                Climate Science
-              </h3>
+              <h3 class="font-bold text-xl mb-2 text-gray-800">Climate Science</h3>
               <p class="text-gray-600">
-                Research on climate change, sustainability, and environmental
-                impacts.
+                Research on climate change, sustainability, and environmental impacts.
               </p>
             </div>
           </div>
@@ -341,11 +294,10 @@
       <div class="container mx-auto px-6">
         <p>
           Done as part of
-          <a
-            href="https://edu.epfl.ch/coursebook/en/data-visualization-COM-480"
-          >
-            COM-480 Data visualization </a
-          >.
+          <a href="https://edu.epfl.ch/coursebook/en/data-visualization-COM-480">
+            COM-480 Data visualization
+          </a>
+          .
         </p>
         <p>Made with ♥ by Syrine Noamen, Mariem Baccari and Daniel Bucher.</p>
       </div>
@@ -353,44 +305,40 @@
 
     <script>
       // DOM Elements
-      const searchInput = document.getElementById("searchInput");
-      const searchButton = document.getElementById("searchButton");
-      const loading = document.getElementById("loading");
-      const resultsSection = document.getElementById("resultsSection");
-      const fieldTitle = document.getElementById("fieldTitle");
-      const fieldDescription = document.getElementById("fieldDescription");
-      const totalPapers = document.getElementById("totalPapers");
-      const totalAuthors = document.getElementById("totalAuthors");
-      const citationTrend = document.getElementById("citationTrend");
-      const tagCloud = document.getElementById("tagCloud");
-      const trendsChartContainer = document.getElementById(
-        "trendsChartContainer",
-      );
-      const subfieldsChartContainer = document.getElementById(
-        "subfieldsChartContainer",
-      );
-      const papersSection = document.getElementById("papersSection");
-      const authorsSection = document.getElementById("authorsSection");
-      const papersList = document.getElementById("papersList");
-      const authorsList = document.getElementById("authorsList");
-      const trendsBtn = document.getElementById("trendsBtn");
-      const papersBtn = document.getElementById("papersBtn");
-      const authorsBtn = document.getElementById("authorsBtn");
+      const searchInput = document.getElementById('searchInput');
+      const searchButton = document.getElementById('searchButton');
+      const loading = document.getElementById('loading');
+      const resultsSection = document.getElementById('resultsSection');
+      const fieldTitle = document.getElementById('fieldTitle');
+      const fieldDescription = document.getElementById('fieldDescription');
+      const totalPapers = document.getElementById('totalPapers');
+      const totalAuthors = document.getElementById('totalAuthors');
+      const citationTrend = document.getElementById('citationTrend');
+      const tagCloud = document.getElementById('tagCloud');
+      const trendsChartContainer = document.getElementById('trendsChartContainer');
+      const subfieldsChartContainer = document.getElementById('subfieldsChartContainer');
+      const papersSection = document.getElementById('papersSection');
+      const authorsSection = document.getElementById('authorsSection');
+      const papersList = document.getElementById('papersList');
+      const authorsList = document.getElementById('authorsList');
+      const trendsBtn = document.getElementById('trendsBtn');
+      const papersBtn = document.getElementById('papersBtn');
+      const authorsBtn = document.getElementById('authorsBtn');
 
       // Chart variables
       let trendsChart;
       let subfieldsChart;
 
       // Event Listeners
-      searchButton.addEventListener("click", () => {
+      searchButton.addEventListener('click', () => {
         const query = searchInput.value.trim();
         if (query) {
           fetchResearchData(query);
         }
       });
 
-      searchInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
           const query = searchInput.value.trim();
           if (query) {
             fetchResearchData(query);
@@ -398,16 +346,16 @@
         }
       });
 
-      trendsBtn.addEventListener("click", () => {
-        showSection("trends");
+      trendsBtn.addEventListener('click', () => {
+        showSection('trends');
       });
 
-      papersBtn.addEventListener("click", () => {
-        showSection("papers");
+      papersBtn.addEventListener('click', () => {
+        showSection('papers');
       });
 
-      authorsBtn.addEventListener("click", () => {
-        showSection("authors");
+      authorsBtn.addEventListener('click', () => {
+        showSection('authors');
       });
 
       // Functions
@@ -417,25 +365,25 @@
       }
 
       function showSection(section) {
-        trendsChartContainer.classList.add("hidden");
-        subfieldsChartContainer.classList.add("hidden");
-        papersSection.classList.add("hidden");
-        authorsSection.classList.add("hidden");
+        trendsChartContainer.classList.add('hidden');
+        subfieldsChartContainer.classList.add('hidden');
+        papersSection.classList.add('hidden');
+        authorsSection.classList.add('hidden');
 
-        if (section === "trends") {
-          trendsChartContainer.classList.remove("hidden");
-          subfieldsChartContainer.classList.remove("hidden");
-        } else if (section === "papers") {
-          papersSection.classList.remove("hidden");
-        } else if (section === "authors") {
-          authorsSection.classList.remove("hidden");
+        if (section === 'trends') {
+          trendsChartContainer.classList.remove('hidden');
+          subfieldsChartContainer.classList.remove('hidden');
+        } else if (section === 'papers') {
+          papersSection.classList.remove('hidden');
+        } else if (section === 'authors') {
+          authorsSection.classList.remove('hidden');
         }
       }
 
       async function fetchResearchData(field) {
         // Show loading state
-        loading.classList.remove("hidden");
-        resultsSection.classList.add("hidden");
+        loading.classList.remove('hidden');
+        resultsSection.classList.add('hidden');
 
         try {
           // Simulate API call with mock data (in a real app, you would call Semantic Scholar API)
@@ -445,15 +393,15 @@
           updateUIWithData(mockData);
 
           // Hide loading and show results
-          loading.classList.add("hidden");
-          resultsSection.classList.remove("hidden");
+          loading.classList.add('hidden');
+          resultsSection.classList.remove('hidden');
 
           // Scroll to results
-          resultsSection.scrollIntoView({ behavior: "smooth" });
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
         } catch (error) {
-          console.error("Error fetching research data:", error);
-          loading.classList.add("hidden");
-          alert("Failed to fetch research data. Please try again later.");
+          console.error('Error fetching research data:', error);
+          loading.classList.add('hidden');
+          alert('Failed to fetch research data. Please try again later.');
         }
       }
 
@@ -468,56 +416,48 @@
 
         // Publication trends data
         const publications = years.map(
-          (year) =>
-            Math.floor(Math.random() * 500) +
-            100 +
-            (year - currentYear + 9) * 50,
+          (year) => Math.floor(Math.random() * 500) + 100 + (year - currentYear + 9) * 50
         );
         const citations = years.map(
-          (year) =>
-            Math.floor(Math.random() * 10000) +
-            5000 +
-            (year - currentYear + 9) * 2000,
+          (year) => Math.floor(Math.random() * 10000) + 5000 + (year - currentYear + 9) * 2000
         );
 
         // Subfields data
         const subfields = [
           {
-            name: "Deep Learning",
+            name: 'Deep Learning',
             papers: Math.floor(Math.random() * 1000) + 500,
           },
           {
-            name: "Natural Language Processing",
+            name: 'Natural Language Processing',
             papers: Math.floor(Math.random() * 800) + 400,
           },
           {
-            name: "Computer Vision",
+            name: 'Computer Vision',
             papers: Math.floor(Math.random() * 900) + 450,
           },
           {
-            name: "Reinforcement Learning",
+            name: 'Reinforcement Learning',
             papers: Math.floor(Math.random() * 700) + 300,
           },
-          { name: "AI Ethics", papers: Math.floor(Math.random() * 600) + 200 },
+          { name: 'AI Ethics', papers: Math.floor(Math.random() * 600) + 200 },
         ];
 
         // Top papers
         const papers = Array.from({ length: 6 }, (_, i) => ({
           id: `paper${i}`,
           title: `Important Research on ${field.substring(0, 15)}... (${currentYear - i})`,
-          authors: Array.from({ length: 3 }, (_, j) => `Author ${j + 1}`).join(
-            ", ",
-          ),
+          authors: Array.from({ length: 3 }, (_, j) => `Author ${j + 1}`).join(', '),
           citations: Math.floor(Math.random() * 1000) + 500,
-          url: "#",
+          url: '#',
           abstract: `This paper presents groundbreaking research in ${field}, demonstrating significant advances in the field. The methodology combines innovative approaches with rigorous testing.`,
         }));
 
         // Top authors
         const authors = Array.from({ length: 8 }, (_, i) => ({
           id: `author${i}`,
-          name: `Dr. ${["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia"][i]}`,
-          affiliation: `${["MIT", "Stanford", "Harvard", "Oxford", "Cambridge", "ETH Zurich", "UC Berkeley", "Princeton"][i]}`,
+          name: `Dr. ${['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'Garcia'][i]}`,
+          affiliation: `${['MIT', 'Stanford', 'Harvard', 'Oxford', 'Cambridge', 'ETH Zurich', 'UC Berkeley', 'Princeton'][i]}`,
           papers: Math.floor(Math.random() * 50) + 20,
           citations: Math.floor(Math.random() * 5000) + 2000,
           hIndex: Math.floor(Math.random() * 30) + 10,
@@ -537,13 +477,7 @@
           authors,
           tags: subfields
             .map((sf) => sf.name)
-            .concat([
-              "Theory",
-              "Applications",
-              "Algorithms",
-              "Systems",
-              "Case Studies",
-            ]),
+            .concat(['Theory', 'Applications', 'Algorithms', 'Systems', 'Case Studies']),
         };
       }
 
@@ -556,16 +490,14 @@
         citationTrend.textContent = data.citationTrend;
 
         // Update tag cloud
-        tagCloud.innerHTML = "";
+        tagCloud.innerHTML = '';
         data.tags.forEach((tag) => {
-          const tagElement = document.createElement("div");
-          tagElement.className = "tag";
+          const tagElement = document.createElement('div');
+          tagElement.className = 'tag';
           tagElement.textContent = tag;
-          tagElement.addEventListener("click", () => {
-            document
-              .querySelectorAll(".tag")
-              .forEach((t) => t.classList.remove("active"));
-            tagElement.classList.add("active");
+          tagElement.addEventListener('click', () => {
+            document.querySelectorAll('.tag').forEach((t) => t.classList.remove('active'));
+            tagElement.classList.add('active');
             // In a real app, you would filter content by this tag
           });
           tagCloud.appendChild(tagElement);
@@ -576,11 +508,11 @@
         updateSubfieldsChart(data.subfields);
 
         // Update papers list
-        papersList.innerHTML = "";
+        papersList.innerHTML = '';
         data.papers.forEach((paper) => {
-          const paperElement = document.createElement("div");
+          const paperElement = document.createElement('div');
           paperElement.className =
-            "paper-card bg-white rounded-lg shadow-md p-6 transition transform hover:scale-[1.02]";
+            'paper-card bg-white rounded-lg shadow-md p-6 transition transform hover:scale-[1.02]';
           paperElement.innerHTML = `
                     <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">${paper.title}</h3>
                     <p class="text-gray-500 text-sm mb-3">${paper.authors}</p>
@@ -594,14 +526,13 @@
         });
 
         // Update authors list
-        authorsList.innerHTML = "";
+        authorsList.innerHTML = '';
         data.authors.forEach((author) => {
-          const authorElement = document.createElement("div");
-          authorElement.className =
-            "bg-white rounded-lg shadow-md p-6 text-center";
+          const authorElement = document.createElement('div');
+          authorElement.className = 'bg-white rounded-lg shadow-md p-6 text-center';
           authorElement.innerHTML = `
                     <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-2xl font-bold">
-                        ${author.name.split(" ")[1].charAt(0)}
+                        ${author.name.split(' ')[1].charAt(0)}
                     </div>
                     <h3 class="font-bold text-lg mb-1">${author.name}</h3>
                     <p class="text-gray-500 text-sm mb-3">${author.affiliation}</p>
@@ -624,11 +555,11 @@
         });
 
         // Show trends by default
-        showSection("trends");
+        showSection('trends');
       }
 
       function updateTrendsChart(years, publications, citations) {
-        const ctx = document.getElementById("trendsChart").getContext("2d");
+        const ctx = document.getElementById('trendsChart').getContext('2d');
 
         // Destroy previous chart if it exists
         if (trendsChart) {
@@ -636,24 +567,24 @@
         }
 
         trendsChart = new Chart(ctx, {
-          type: "line",
+          type: 'line',
           data: {
             labels: years,
             datasets: [
               {
-                label: "Publications",
+                label: 'Publications',
                 data: publications,
-                borderColor: "#4f46e5",
-                backgroundColor: "rgba(79, 70, 229, 0.1)",
+                borderColor: '#4f46e5',
+                backgroundColor: 'rgba(79, 70, 229, 0.1)',
                 borderWidth: 2,
                 tension: 0.3,
                 fill: true,
               },
               {
-                label: "Citations",
+                label: 'Citations',
                 data: citations,
-                borderColor: "#10b981",
-                backgroundColor: "rgba(16, 185, 129, 0.1)",
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
                 borderWidth: 2,
                 tension: 0.3,
                 fill: true,
@@ -665,10 +596,10 @@
             maintainAspectRatio: false,
             plugins: {
               legend: {
-                position: "top",
+                position: 'top',
               },
               tooltip: {
-                mode: "index",
+                mode: 'index',
                 intersect: false,
               },
             },
@@ -700,59 +631,54 @@
           subfieldsChart.destroy();
         }
 
-        subfieldsChart = new ApexCharts(
-          document.querySelector("#subfieldsChart"),
-          {
-            series: subfieldsData.series,
-            labels: subfieldsData.labels,
-            chart: {
-              type: "donut",
-              height: "100%",
-            },
-            colors: ["#4f46e5", "#6366f1", "#818cf8", "#a5b4fc", "#c7d2fe"],
-            legend: {
-              position: "right",
-            },
-            plotOptions: {
-              pie: {
-                donut: {
-                  labels: {
+        subfieldsChart = new ApexCharts(document.querySelector('#subfieldsChart'), {
+          series: subfieldsData.series,
+          labels: subfieldsData.labels,
+          chart: {
+            type: 'donut',
+            height: '100%',
+          },
+          colors: ['#4f46e5', '#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe'],
+          legend: {
+            position: 'right',
+          },
+          plotOptions: {
+            pie: {
+              donut: {
+                labels: {
+                  show: true,
+                  total: {
                     show: true,
-                    total: {
-                      show: true,
-                      label: "Total Papers",
-                      formatter: function (w) {
-                        return w.globals.seriesTotals
-                          .reduce((a, b) => a + b, 0)
-                          .toLocaleString();
-                      },
+                    label: 'Total Papers',
+                    formatter: function (w) {
+                      return w.globals.seriesTotals.reduce((a, b) => a + b, 0).toLocaleString();
                     },
                   },
                 },
               },
             },
-            responsive: [
-              {
-                breakpoint: 768,
-                options: {
-                  chart: {
-                    height: 300,
-                  },
-                  legend: {
-                    position: "bottom",
-                  },
+          },
+          responsive: [
+            {
+              breakpoint: 768,
+              options: {
+                chart: {
+                  height: 300,
+                },
+                legend: {
+                  position: 'bottom',
                 },
               },
-            ],
-          },
-        );
+            },
+          ],
+        });
 
         subfieldsChart.render();
       }
 
       // Initialize with a default search
-      window.addEventListener("DOMContentLoaded", () => {
-        searchField("Artificial Intelligence");
+      window.addEventListener('DOMContentLoaded', () => {
+        searchField('Artificial Intelligence');
       });
     </script>
   </body>

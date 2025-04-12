@@ -1,125 +1,136 @@
 <!doctype html>
 <html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Computer Science Research In A Nutshell | Academic Insights</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Computer Science Research In A Nutshell | Academic Insights</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="output.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
-</head>
+  <style>
+    .header-gradient {
+      background: linear-gradient(135deg, #ffd6e0, #c1c8ff);
+    }
 
-<style>
-  .header-gradient {
-    background: linear-gradient(135deg, #ffd6e0, #c1c8ff);
-  }
+    .card {
+      @apply bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1;
+    }
 
-  .card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1;
-  }
+    .card-icon {
+      @apply h-40 bg-blue-500 flex items-center justify-center;
+    }
+  </style>
 
-  .card-icon {
-    @apply h-40 bg-blue-500 flex items-center justify-center;
-  }
-</style>
+  <body class="flex flex-col min-h-full">
+    <header
+      class="relative header-gradient text-white py-16 shadow-2xl rounded-b-[2rem] overflow-hidden"
+    >
+      <div class="container mx-auto px-10 relative z-10">
+        <h1 class="font-bold text-4xl">
+          <i class="fas fa-graduation-cap"></i>
+          CS Hall of Fame
+        </h1>
+        <p class="text-2xl py-8">Computer Science Research In A Nutshell</p>
+      </div>
+    </header>
 
-<body class="flex flex-col min-h-full">
-  <header class="relative header-gradient text-white py-16 shadow-2xl rounded-b-[2rem] overflow-hidden">
-    <div class="container mx-auto px-10 relative z-10">
-      <h1 class="font-bold text-4xl">
-        <i class="fas fa-graduation-cap"></i> CS Hall of Fame 
-      </h1>
-      <p class="text-2xl py-8">
-        Computer Science Research In A Nutshell 
-      </p>
-    </div>
-  </header>
+    <main class="flex-1">
+      <div class="container mx-auto px-6 my-20">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          📜 A Journey Through Time: Foundations of Computer Science
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Computer Science didn’t just happen overnight. It was shaped by decades of brilliant
+          ideas, paradigm shifts, and problem-solving breakthroughs. This section highlights the
+          <span class="font-semibold">most foundational papers</span>
+          in CS — from Alan Turing’s machine, to the birth of the Web, to the deep learning
+          revolution.
+        </p>
+        <p class="text-md text-gray-600 mb-4 italic">
+          <span class="font-semibold">Hover</span>
+          over each dot in the timeline below to discover why each moment matters.
+        </p>
+      </div>
 
-  <main class="flex-1">
-    <div class="container mx-auto px-6 my-20">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        📜 A Journey Through Time: Foundations of Computer Science
-      </h2>
-      <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-        Computer Science didn’t just happen overnight. It was shaped by decades of brilliant ideas, paradigm shifts, and problem-solving breakthroughs. 
-        This section highlights the <span class="font-semibold">most foundational papers</span> in CS — from Alan Turing’s machine, to the birth of the Web, to the deep learning revolution.
-      </p>
-      <p class="text-md text-gray-600 mb-4 italic">
-        <span class="font-semibold">Hover</span> over each dot in the timeline below to discover why each moment matters.
-      </p>
-    </div>
-    
-    <div class="container mx-auto px-6 my-20" id="foundational-section">
-      <svg id="foundational-timeline" width="1000" height="300"></svg>
-      <div id="timeline-tooltip"></div>
-    </div> 
-    
-    <div class="container mx-auto px-6 mt-16">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">
-        TODO: introduce main CS subfields here, what they do etc. 
-      </h2>
-    </div>  
+      <div class="container mx-auto px-6 my-20" id="foundational-section">
+        <svg id="foundational-timeline" width="1000" height="300"></svg>
+        <div id="timeline-tooltip"></div>
+      </div>
 
-    <div class="container mx-auto px-6 mt-16">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">
-        What's been going on in CS ? An overview of the last five years: 
-      </h2>
-    </div>  
+      <div class="container mx-auto px-6 mt-16">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+          TODO: introduce main CS subfields here, what they do etc.
+        </h2>
+      </div>
 
-    <div class="container mx-auto px-6 my-10">
-      <label for="year-select" class="block text-lg font-semibold text-gray-700 mb-2">
-        Explore by Year:
-      </label>
-      <select id="year-select" class="border rounded-md p-2 shadow">
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-        <option value="2020">2020</option>
-      </select>
-    </div>
-    
-    <div class="container mx-auto px-6 my-10">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Top Papers of the Year 📚🔥</h2>
-      <div id="yearly-top-papers"></div> 
-    </div>
-    
-    <div class="container mx-auto px-6 my-10">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">The Minds Behind the Magic: Most Cited Authors 🧠✨</h2>
-      <div id="yearly-top-authors"></div> 
-    </div>
+      <div class="container mx-auto px-6 mt-16">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+          What's been going on in CS ? An overview of the last five years:
+        </h2>
+      </div>
 
-    <div class="container mx-auto px-6 my-10">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Where can you find them ? 📍</h2>
-      <div id="yearly-sankey"></div>
-    </div>
-    
-    <div class="container mx-auto px-6 my-20">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        TODO: Connectivity graph of authors collaboration could go here  
-      </h2>
-    </div>
-    <div class="container mx-auto px-6 my-20">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        TODO: Three circles AI, Systems, Theory + click on each gives you subfields (ML, OS, etc.) and then click on each gives you a list of papers in that field
-      </h2>
-    </div>
-  </main>
+      <div class="container mx-auto px-6 my-10">
+        <label for="year-select" class="block text-lg font-semibold text-gray-700 mb-2">
+          Explore by Year:
+        </label>
+        <select id="year-select" class="border rounded-md p-2 shadow">
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+        </select>
+      </div>
 
-  <footer class="bg-gray-800 text-white py-6">
-    <div class="container mx-auto px-6">
-      <p class="py-2">
-        Done as part of
-        <a href="https://edu.epfl.ch/coursebook/en/data-visualization-COM-480" class="underline">
-          COM-480 Data visualization </a>.
-      </p>
-      <p>Made with ♥ by Syrine Noamen, Mariem Baccari and Daniel Bucher.</p>
-    </div>
-  </footer>
-  <script src="foundational_papers.js"></script>
-  <script src="yearly.js"></script>
-</body>
+      <div class="container mx-auto px-6 my-10">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Top Papers of the Year 📚🔥</h2>
+        <div id="yearly-top-papers"></div>
+      </div>
 
+      <div class="container mx-auto px-6 my-10">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+          The Minds Behind the Magic: Most Cited Authors 🧠✨
+        </h2>
+        <div id="yearly-top-authors"></div>
+      </div>
+
+      <div class="container mx-auto px-6 my-10">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Where can you find them ? 📍</h2>
+        <div id="yearly-sankey"></div>
+      </div>
+
+      <div class="container mx-auto px-6 my-20">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          TODO: Connectivity graph of authors collaboration could go here
+        </h2>
+      </div>
+      <div class="container mx-auto px-6 my-20">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          TODO: Three circles AI, Systems, Theory + click on each gives you subfields (ML, OS, etc.)
+          and then click on each gives you a list of papers in that field
+        </h2>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+      <div class="container mx-auto px-6">
+        <p class="py-2">
+          Done as part of
+          <a href="https://edu.epfl.ch/coursebook/en/data-visualization-COM-480" class="underline">
+            COM-480 Data visualization
+          </a>
+          .
+        </p>
+        <p>Made with ♥ by Syrine Noamen, Mariem Baccari and Daniel Bucher.</p>
+      </div>
+    </footer>
+    <script src="foundational_papers.js"></script>
+    <script src="yearly.js"></script>
+  </body>
 </html>

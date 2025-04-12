@@ -70,7 +70,7 @@
 
     <div class="container mx-auto px-6 my-10">
       <label for="year-select" class="block text-lg font-semibold text-gray-700 mb-2">
-        Explore Yearly Highlights
+        Explore by Year:
       </label>
       <select id="year-select" class="border rounded-md p-2 shadow">
         <option value="2024">2024</option>
@@ -81,32 +81,21 @@
       </select>
     </div>
     
-    <div class="container mx-auto px-6 mt-16">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">
-        Meet the Legends: CS Papers Everyone's Talking About 📚🔥
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div id="top-papers" class="space-y-4"></div>
-
-        <div id="paper-details" class="bg-white p-6 rounded-xl shadow-md hidden">
-          <h3 class="text-xl font-bold text-gray-800 mb-2" id="detail-title"></h3>
-          <p class="text-gray-600 mb-2" id="detail-authors"></p>
-          <p class="text-gray-700" id="detail-abstract"></p>
-        </div>
-      </div>
+    <div class="container mx-auto px-6 my-10">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Top Papers of the Year 📚🔥</h2>
+      <div id="yearly-top-papers"></div> 
+    </div>
+    
+    <div class="container mx-auto px-6 my-10">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">The Minds Behind the Magic: Most Cited Authors 🧠✨</h2>
+      <div id="yearly-top-authors"></div> 
     </div>
 
-    <div class="container mx-auto px-6 my-20" id="author-chart-section">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">The Minds Behind the Magic: Most Cited Authors 🧠✨</h2>
-      <svg id="chart-authors" width="500" height="400"></svg>
+    <div class="container mx-auto px-6 my-10">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Where can you find them ? 📍</h2>
+      <div id="yearly-sankey"></div>
     </div>
-    <div class="container mx-auto px-6 my-20">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        Where the Top Authors Publish 📍//TODO Same color as in bar chart per author => colors lecture 
-      </h2>
-      <svg id="sankey-diagram" width="700" height="500"></svg>
-    </div>
+    
     <div class="container mx-auto px-6 my-20">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">
         TODO: Connectivity graph of authors collaboration could go here  
@@ -117,13 +106,6 @@
         TODO: Three circles AI, Systems, Theory + click on each gives you subfields (ML, OS, etc.) and then click on each gives you a list of papers in that field
       </h2>
     </div>
-
-    <div class="container mx-auto px-6 my-20">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        Now let's get technical 🤓
-      </h2>
-    </div>
-
   </main>
 
   <footer class="bg-gray-800 text-white py-6">
@@ -137,8 +119,7 @@
     </div>
   </footer>
   <script src="foundational_papers.js"></script>
-  <script src="most_cited_papers.js"></script>
-  <script src="authors_charts.js"></script>
+  <script src="yearly.js"></script>
 </body>
 
 </html>

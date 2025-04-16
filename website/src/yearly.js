@@ -25,7 +25,7 @@ function renderTopPapers(papers) {
   });
 }
 
-function renderAuthorChart(authors) {
+function renderVenueChart(authors) {
   const width = 500;
   const height = 400;
   const margin = { top: 20, right: 20, bottom: 80, left: 80 };
@@ -173,7 +173,15 @@ function loadYearlyData(year, observer) {
         .slice(0, 10)
         .map(([name, citations]) => ({ name, citations }));
 
-      const { bars, y, innerHeight, authorColorMap } = renderAuthorChart(topAuthors);
+      const venues = [
+        { name: 'Computers and Education: Artificial Intelligence', citations: 37 },
+        { name: 'Conference on Fairness, Accountability and Transparency', citations: 36 },
+        { name: 'International Conference on Learning Representations', citations: 25 },
+        { name: 'Nature', citations: 25 },
+        { name: 'IEEE Access', citations: 15 },
+      ];
+
+      const { bars, y, innerHeight, authorColorMap } = renderVenueChart(venues);
 
       const target = document.querySelector('#yearly-top-authors svg');
       if (target) observer.observe(target);

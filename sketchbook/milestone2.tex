@@ -25,20 +25,27 @@ This concept could be further extended to highlight key developments within spec
 \includegraphics[width=0.6\textwidth]{./pictures/timeline.png}
 \end{center}
 
-A bar chart displays the most cited authors within a given domain (e.g., Operating Systems), while sankey diagram illustrates the venues where these authors have published.
+The fields and their respective subfields (which may belong to more than one field) are represented as round buttons. These buttons become less colorful when not selected:
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{./pictures/most_cited.png}
+\includegraphics[width=0.6\textwidth]{./pictures/fields.jpeg}
+\end{center}
+
+We also include a list of the most cited papers and authors, with the option to filter by publication year.
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{./pictures/top_papers_top_authors.png}
+\end{center}
+
+A user might also be interested in identifying the most important venues.
+This information can be found by examining the average citation counts,
+which are visualized in a bar chart or a Sankey diagram illustrating where the most cited authors have published.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{./pictures/top_publication_venues.png}
 \end{center}
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{./pictures/sankey.png}
-\end{center}
-
-We also include a list of the most cited papers, with the option to filter by publication year.
-
-\begin{center}
-\includegraphics[width=0.8\textwidth]{./pictures/top_papers.png}
 \end{center}
 
 We also plan to show the number of publications in a given field over time.
@@ -63,6 +70,14 @@ For the most relevant papers, we could also create a graph-based interface that 
 
 These two visualizations pose greater challenges—not only in terms of visual complexity, but also due to the demanding data preprocessing involved.
 As such, they will require more development time and certainly more CPU cycles.
+
+Another idea is to create an ancestral gallery showcasing all Turing Award winners.
+Each laureate would be represented with a portrait, and when hovering over a photo, a short summary of their contribution would appear.
+Clicking the image could take users to the official ACM Turing Award page for more in-depth information.
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{./pictures/ancestor_galery.png}
+\end{center}
 
 \section{Tools and Technologies Used for Visualizations}
 For our visualizations, we will use the D3.js library to create dynamic, interactive data graphics.

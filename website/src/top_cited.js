@@ -20,7 +20,11 @@ function renderPapers(papers) {
       .append('p')
       .attr('class', 'text-sm text-gray-600')
       .text(
-        `${parseAuthors(paper.author_name).join(', ') || 'Unknown authors'} • ${paper.n_citation} citations`
+        `${
+          parseAuthors(paper.author_name)
+            .filter((n) => n != 'nan')
+            .join(', ') || 'Unknown authors'
+        } • ${paper.n_citation} citations`
       );
   });
 }
@@ -52,6 +56,7 @@ function renderTopAuthors(papers) {
   });
 
   const topAuthors = Array.from(authorMap.entries())
+    .filter(([name, _]) => name != 'nan')
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
     .map(([name, citations]) => ({ name, citations }));

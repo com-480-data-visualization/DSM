@@ -85,7 +85,7 @@
 
       <div class="container mx-auto px-6 my-20">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">
-          📜 A Journey Through Time: Foundations of Computer Science
+          A Journey Through Time: Foundations of Computer Science
         </h2>
         <p class="text-lg text-gray-700 mb-6 leading-relaxed">
           Computer Science didn’t just happen overnight. It was shaped by decades of brilliant
@@ -109,8 +109,52 @@
         <h2 class="text-2xl font-bold text-gray-800 mb-4">TODO: ancestral gallery could go here</h2>
       </div>
 
+      <div class="container mx-auto px-6 my-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-gray-800">
+            Most Cited CS Papers from the 1980's to the mid 2010's
+          </h2>
+          <label class="text-sm text-gray-600">
+            Show
+            <select id="paper-limit" class="ml-2 border rounded-md p-1 text-sm">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+            results
+          </label>
+        </div>
+
+        <div id="top-cited-papers" class="space-y-4"></div>
+
+        <div id="paper-details" class="bg-white p-6 rounded-xl shadow-md hidden mt-10">
+          <h3 class="text-xl font-bold text-gray-800 mb-2" id="detail-title"></h3>
+          <p class="text-sm text-gray-600 mb-1" id="detail-authors"></p>
+          <p class="text-sm text-gray-600 mb-1" id="detail-venue"></p>
+          <p class="text-sm text-gray-600 mb-1" id="detail-year"></p>
+          <p class="text-sm text-gray-600 mb-1" id="detail-doi"></p>
+          <p class="text-gray-700 mt-2" id="detail-keywords"></p>
+        </div>
+
+        <div class="container mx-auto px-6 my-10">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Top Authors</h2>
+          <div id="top-authors-chart"></div>
+        </div>
+
+        <div class="container mx-auto px-6 my-10">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Where They Publish</h2>
+          <div id="sankey-chart"></div>
+        </div>
+      </div>
+
       <div class="container mx-auto px-6 my-20">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">🗺️ Main Fields</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Growth of subfields over time</h2>
+        <svg id="subfield-growth" width="1000" height="500"></svg>
+      </div>
+
+      <div class="container mx-auto px-6 my-20">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Main Fields</h2>
       </div>
 
       <div class="relative w-full h-[600px]">
@@ -218,92 +262,6 @@
         </div>
       </div>
 
-      <div class="container mx-auto px-6 mt-16">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">
-          What's been going on in CS ? A research overview:
-        </h2>
-      </div>
-
-      <div class="container mx-auto px-6 my-10">
-        <label for="year-select" class="block text-lg font-semibold text-gray-700 mb-2">
-          Explore by Year:
-        </label>
-        <select id="year-select" class="border rounded-md p-2 shadow">
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-        </select>
-      </div>
-
-      <div class="container mx-auto px-6 my-10">
-        <!-- Left Column: Top Papers -->
-        <h2 class="text-xl font-semibold mb-4">📚 Top Papers</h2>
-        <ol class="space-y-4 list-decimal list-inside">
-          <li>
-            <p class="font-semibold">
-              Fast-track cardiac care for adult cardiac surgical patients.
-            </p>
-            <p class="text-sm text-gray-600">Citations: 235</p>
-          </li>
-          <li>
-            <p class="font-semibold">Environmentalism in surgical practice.</p>
-            <p class="text-sm text-gray-600">Citations: 46</p>
-          </li>
-          <li>
-            <p class="font-semibold">
-              Embedded Computer Systems: Architectures, Modeling, and Simulation – 24th Int. Conf.,
-              SAMOS 2024
-            </p>
-            <p class="text-sm text-gray-600">Citations: 43</p>
-          </li>
-          <li>
-            <p class="font-semibold">
-              A systematic review of large language models and their implications in medical
-              education.
-            </p>
-            <p class="text-sm text-gray-600">Citations: 41</p>
-          </li>
-          <li>
-            <p class="font-semibold">
-              Protocol for national monthly survey of smoking and alcohol use in England, Scotland &
-              Wales.
-            </p>
-            <p class="text-sm text-gray-600">Citations: 38</p>
-          </li>
-        </ol>
-      </div>
-
-      <div class="container mx-auto px-6 my-10">
-        <!-- Right Column: Top Authors -->
-        <div>
-          <h2 class="text-xl font-semibold mb-4">👩‍🔬 Top Authors</h2>
-          <ul class="space-y-4">
-            <li>
-              <p class="font-semibold">Dr. Alice Thompson</p>
-              <p class="text-sm text-gray-600">Total Citations: 3,250</p>
-            </li>
-            <li>
-              <p class="font-semibold">Prof. John Wu</p>
-              <p class="text-sm text-gray-600">Total Citations: 2,980</p>
-            </li>
-            <li>
-              <p class="font-semibold">Dr. Maria Reyes</p>
-              <p class="text-sm text-gray-600">Total Citations: 2,540</p>
-            </li>
-            <li>
-              <p class="font-semibold">Dr. Omar Farouk</p>
-              <p class="text-sm text-gray-600">Total Citations: 2,310</p>
-            </li>
-            <li>
-              <p class="font-semibold">Dr. Helena Fischer</p>
-              <p class="text-sm text-gray-600">Total Citations: 2,190</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-
       <div class="container mx-auto px-6 my-20">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">
           TODO: Connectivity graph of authors collaboration could go here
@@ -314,18 +272,6 @@
         <h2 class="text-2xl font-bold text-gray-800 mb-4">
           TODO: Citation graph of papers could go here
         </h2>
-      </div>
-
-      <div class="container mx-auto px-6 my-10">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Top publication venues of field 📚🔥</h2>
-        <div id="yearly-top-authors"></div>
-      </div>
-
-      <div class="container mx-auto px-6 my-10">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">
-          Where can you find the top authors ? 📍
-        </h2>
-        <div id="yearly-sankey"></div>
       </div>
     </main>
     <footer class="bg-gray-800 text-white py-6">
@@ -341,6 +287,8 @@
       </div>
     </footer>
     <script src="foundational_papers.js"></script>
-    <script src="yearly.js"></script>
+    <script src="top_cited.js"></script>
+    <script src="subfield_growth.js"></script>
+    <script src="constants.js"></script>
   </body>
 </html>

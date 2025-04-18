@@ -1,3 +1,7 @@
+function formatNumberWithQuote(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+}
+
 function parseAuthors(raw) {
   if (!raw) return [];
   return raw.split(';').map((d) => d.trim());
@@ -24,7 +28,7 @@ function renderPapers(papers) {
           parseAuthors(paper.author_name)
             .filter((n) => n != 'nan')
             .join(', ') || 'Unknown authors'
-        } • ${Math.floor(paper.n_citation)} citations`
+        } • ${formatNumberWithQuote(Math.floor(paper.n_citation))} citations`
       );
   });
 }

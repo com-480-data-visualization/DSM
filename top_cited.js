@@ -24,7 +24,7 @@ function renderPapers(papers) {
           parseAuthors(paper.author_name)
             .filter((n) => n != 'nan')
             .join(', ') || 'Unknown authors'
-        } • ${paper.n_citation} citations`
+        } • ${Math.floor(paper.n_citation)} citations`
       );
   });
 }

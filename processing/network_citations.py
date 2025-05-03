@@ -506,7 +506,8 @@ def main():
     # Example: U-Net paper ID on Semantic Scholar
     paper_id = input("Enter the Semantic Scholar paper ID (or press Enter for U-Net example): ")
     if not paper_id:
-        paper_id = "6364fdaa0a0eccd823a779fcdd489173f938e91a"  # U-Net paper
+        paper_id = "4e9ec92a90c5d571d2f1d496f8df01f0a8f38596" # Bitcoin paper
+        #"6364fdaa0a0eccd823a779fcdd489173f938e91a"  # U-Net paper
     
     # Create client
     client = SemanticScholarClient(max_retries=20, timeout=15, delay_between_requests=1)

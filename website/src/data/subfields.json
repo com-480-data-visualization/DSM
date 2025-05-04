@@ -1,0 +1,122 @@
+[
+  {
+    "text": "Computer Science",
+    "size": 120,
+    "field": ["root"],
+    "desc": "The study of computation, information, and the ingenious ways we process, store, and communicate them."
+  },
+  {
+    "text": "CS Theory",
+    "size": 60,
+    "field": ["theory"],
+    "desc": "Mathematical foundations that reveal what can be computed—and how efficiently."
+  },
+  {
+    "text": "Computer Systems",
+    "size": 60,
+    "field": ["systems"],
+    "desc": "The hardware–software stack that makes computation possible at any scale."
+  },
+  {
+    "text": "AI & Data Science",
+    "size": 60,
+    "field": ["ai"],
+    "desc": "Algorithms that learn from data and turn insight into intelligent action."
+  },
+  {
+    "text": "Algorithms",
+    "size": 30,
+    "field": ["theory"],
+    "desc": "Step-by-step methods for solving problems and processing data efficiently."
+  },
+  {
+    "text": "Complexity Theory",
+    "size": 30,
+    "field": ["theory"],
+    "desc": "Classifying problems by the time, space, and other resources required to solve them."
+  },
+  {
+    "text": "OS",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Software that orchestrates hardware resources and provides services to applications."
+  },
+  {
+    "text": "Networks",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Protocols and architectures that move data reliably between devices and across the globe."
+  },
+  {
+    "text": "Architecture",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Design and optimisation of the processors and memory hierarchies that execute instructions."
+  },
+  {
+    "text": "Measurement",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Experimental techniques for quantifying and analysing real-world system behaviour."
+  },
+  {
+    "text": "Databases",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Models and engines for storing, querying, and managing structured information at scale."
+  },
+  {
+    "text": "Embedded Systems",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Special-purpose computers woven into products, often under strict real-time constraints."
+  },
+  {
+    "text": "Design",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Human-centred methods for creating usable, engaging computing experiences."
+  },
+  {
+    "text": "HPC",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "High-Performance Computing—parallel hardware and software for enormous scientific workloads."
+  },
+  {
+    "text": "Mobile Systems",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Platforms and protocols that keep resource-constrained, portable devices connected and responsive."
+  },
+  {
+    "text": "Software Engineering",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Principles and tooling for designing, building, testing, and evolving reliable software."
+  },
+  {
+    "text": "NLP",
+    "size": 30,
+    "field": ["ai"],
+    "desc": "Natural-language processing—algorithms that let computers understand and generate human language."
+  },
+  {
+    "text": "Computer Vision",
+    "size": 30,
+    "field": ["ai"],
+    "desc": "Techniques that enable machines to interpret and act upon visual information."
+  },
+  {
+    "text": "Programming Languages",
+    "size": 30,
+    "field": ["theory", "systems"],
+    "desc": "Design, semantics, and implementation of the languages we use to describe computation."
+  },
+  {
+    "text": "Signal Theory",
+    "size": 30,
+    "field": ["theory", "ai"],
+    "desc": "Mathematical analysis of signals for communication, control, and machine learning."
+  }
+]

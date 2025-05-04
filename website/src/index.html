@@ -11,6 +11,7 @@
     />
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+    <script src="https://unpkg.com/d3-cloud@1/build/d3.layout.cloud.js"></script>
     <script defer>
       document.addEventListener('DOMContentLoaded', () => {
         const mainButtons = document.querySelectorAll('[data-main]');
@@ -57,6 +58,24 @@
       .grid-rows-subgrid {
         grid-template-rows: repeat(3, auto);
       }
+    }
+
+    #cloud-container {
+      width: 100%;
+      height: 60vh;
+      min-height: 380px;
+      position: relative;
+    }
+    #cloud-container svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .word {
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.25s ease;
     }
   </style>
 
@@ -134,6 +153,22 @@
         </div>
       </div>
 
+      <div class="container mx-auto px-6 my-20">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Explore Research Areas</h1>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Dive deeper into the world of Computer Science by selecting a field of interest. This
+          interactive overview lets you explore key subfields, notable research contributions,
+          influential authors, and major publication venues.
+        </p>
+        <div class="flex justify-center items-center w-full">
+          <div id="cloud-container" style="width: 100%; max-width: 1200px; height: 60vh"></div>
+        </div>
+        <div id="info-box" class="mt-6">
+          <span id="info-title" class="block text-2xl font-semibold mb-4"></span>
+          <span id="info-desc" class="text-lg text-gray-700 mb-6 leading-relaxed"></span>
+        </div>
+      </div>
+
       <div class="container mx-auto px-6 my-10">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-bold text-gray-800">
@@ -179,115 +214,6 @@
       </div>
 
       <div class="container mx-auto px-6 my-20">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Main Fields</h2>
-      </div>
-
-      <div class="relative w-full h-[600px]">
-        <!-- Computer Systems (center top) -->
-        <div class="absolute left-1/2 top-[10%] transform -translate-x-1/2 z-10">
-          <button
-            class="w-32 h-32 rounded-full bg-green-600 text-white font-semibold shadow-lg hover:bg-green-700 transition"
-          >
-            Computer Systems
-          </button>
-        </div>
-
-        <!-- Systems Subfields -->
-        <div class="absolute left-[42%] top-[2%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">OS</button>
-        </div>
-        <div class="absolute left-[58%] top-[2%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Databases
-          </button>
-        </div>
-        <div class="absolute left-[65%] top-[18%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">Design</button>
-        </div>
-        <div class="absolute left-[60%] top-[30%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Embedded Systems
-          </button>
-        </div>
-        <div class="absolute left-[50%] top-[35%] transform -translate-x-1/2">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">HPC</button>
-        </div>
-        <div class="absolute left-[40%] top-[30%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Mobile Systems
-          </button>
-        </div>
-        <div class="absolute left-[35%] top-[18%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Measurements
-          </button>
-        </div>
-        <div class="absolute left-[44%] top-[13%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Networks
-          </button>
-        </div>
-        <div class="absolute left-[46%] top-[22%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Software Engineering
-          </button>
-        </div>
-        <div class="absolute left-[38%] top-[10%]">
-          <button class="w-20 h-20 rounded-full bg-green-500 text-white text-xs p-2">
-            Architecture
-          </button>
-        </div>
-
-        <!-- CS Theory (bottom left) -->
-        <div class="absolute left-[15%] bottom-[10%]">
-          <button
-            class="w-32 h-32 rounded-full bg-purple-600 text-white font-semibold shadow-lg hover:bg-purple-700 transition"
-          >
-            CS Theory
-          </button>
-        </div>
-        <div class="absolute left-[12%] bottom-[22%]">
-          <button class="w-20 h-20 rounded-full bg-purple-400 text-white text-xs p-2">
-            Complexity Theory
-          </button>
-        </div>
-        <div class="absolute left-[20%] bottom-[22%]">
-          <button class="w-20 h-20 rounded-full bg-purple-400 text-white text-xs p-2">
-            Algorithms
-          </button>
-        </div>
-
-        <!-- AI & Data Science (bottom right) -->
-        <div class="absolute right-[15%] bottom-[10%]">
-          <button
-            class="w-32 h-32 rounded-full bg-pink-600 text-white font-semibold shadow-lg hover:bg-pink-700 transition"
-          >
-            AI & Data Science
-          </button>
-        </div>
-        <div class="absolute right-[12%] bottom-[22%]">
-          <button class="w-20 h-20 rounded-full bg-pink-400 text-white text-xs p-2">NLP</button>
-        </div>
-        <div class="absolute right-[20%] bottom-[22%]">
-          <button class="w-20 h-20 rounded-full bg-pink-400 text-white text-xs p-2">
-            Computer Vision
-          </button>
-        </div>
-
-        <!-- Shared Subfields (center bottom) -->
-        <div class="absolute left-1/2 bottom-[10%] transform -translate-x-1/2">
-          <button class="w-24 h-24 rounded-full bg-yellow-500 text-white text-xs p-2">
-            Programming Languages
-          </button>
-        </div>
-        <div class="absolute left-1/2 bottom-[22%] transform -translate-x-1/2">
-          <button class="w-24 h-24 rounded-full bg-yellow-300 text-white text-xs p-2">
-            Signal Theory
-          </button>
-        </div>
-      </div>
-
-      <div class="container mx-auto px-6 my-20">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">
           TODO: Connectivity graph of authors collaboration could go here
         </h2>
@@ -316,5 +242,6 @@
     <script src="subfield_growth.js"></script>
     <script src="constants.js"></script>
     <script src="turing-award-winners.js"></script>
+    <script src="fields.js"></script>
   </body>
 </html>

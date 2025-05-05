@@ -4,7 +4,21 @@ function formatNumberWithQuote(num) {
 
 function parseAuthors(raw) {
   if (!raw) return [];
-  return raw.split(';').map((d) => d.trim());
+  return raw.split(';').map((d) => d.trim()).filter((a) => a.length > 0 && a.toLowerCase() !== 'nan');
+}
+
+let lastOpenPaperId = null;
+
+function formatNumberWithQuote(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+}
+
+function parseAuthors(raw) {
+  if (!raw) return [];
+  return raw
+    .split(';')
+    .map((d) => d.trim())
+    .filter((a) => a && a.toLowerCase() !== 'nan');
 }
 
 function renderPapers(papers) {
@@ -13,7 +27,7 @@ function renderPapers(papers) {
     const div = container
       .append('div')
       .attr('class', 'p-4 border rounded-lg hover:bg-gray-50 cursor-pointer')
-      .on('click', () => showDetails(paper));
+      .on('click', () => toggleDetails(paper));
 
     div
       .append('p')
@@ -25,12 +39,24 @@ function renderPapers(papers) {
       .attr('class', 'text-sm text-gray-600')
       .text(
         `${
-          parseAuthors(paper.author_name)
-            .filter((n) => n != 'nan')
-            .join(', ') || 'Unknown authors'
+          parseAuthors(paper.author_name).join(', ') || 'Unknown authors'
         } • ${formatNumberWithQuote(Math.floor(paper.n_citation))} citations`
       );
   });
+}
+
+function toggleDetails(paper) {
+  const detailsEl = d3.select('#paper-details');
+
+  if (lastOpenPaperId === paper.id) {
+    detailsEl.classed('hidden', true);
+    lastOpenPaperId = null;
+    return;
+  }
+
+  lastOpenPaperId = paper.id;
+  showDetails(paper);
+  detailsEl.classed('hidden', false);
 }
 
 function showDetails(paper) {
@@ -45,8 +71,28 @@ function showDetails(paper) {
       ? `DOI Link: <a href="${paper.doi}" target="_blank" class="text-blue-600 underline">${paper.doi}</a>`
       : `🔗 DOI: N/A`
   );
-  d3.select('#detail-keywords').text(`Keywords: ${paper.keyword || 'None'}`);
-  d3.select('#paper-details').classed('hidden', false);
+  const kwDiv = d3.select('#detail-keywords')
+    .html('')                    
+    .append('div')
+      .attr('class', 'mt-2');    
+
+  if (paper.keyword) {
+    const kws = paper.keyword.split(';').map(k => k.trim()).filter(k => k);
+    const ul = kwDiv.append('ul')
+      .attr('class', 'list-disc list-inside space-y-1 text-gray-700 text-sm');
+
+    ul.text("Keywords:")  
+    kws.forEach(k => {
+      ul.append('li').text(k);
+    });
+  } else {
+    kwDiv.append('p')
+      .attr('class', 'text-sm text-gray-600')
+      .text('Keywords: None');
+  }
+
+  d3.select('#paper-details')
+    .classed('opacity-0 pointer-events-none', false);
 }
 
 function renderTopAuthors(papers) {
@@ -210,12 +256,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let allData = [];
 
   d3.csv('data/high_citations_all_dblp.csv').then((data) => {
-    allData = data;
-    updateVisuals(5); // default
+    allData = data.filter((d) => {
+      const vt = (d.venue_type || '').toLowerCase().trim();
+      const vn = (d.venue_name || '').toLowerCase().trim();
+      return vt !== 'book' && vn !== '' && vn !== 'n/a';
+    });
 
-    document.getElementById('paper-limit').addEventListener('change', (e) => {
-      const limit = +e.target.value;
-      updateVisuals(limit);
+    updateVisuals(5);
+
+    d3.select('#paper-limit').on('change', function () {
+      updateVisuals(+this.value);
     });
   });
 

@@ -195,12 +195,14 @@
               results
             </label>
 
-            <div class="flex space-x-6">
-            <div id="top-cited-papers" class="flex-1 space-y-4"></div>
+            <div class="flex space-x-6 justify-center">
+            <div id="top-cited-papers" class="flex-none w-[500px] h-[400px] space-y-4 justify-center"></div>
       
             <div
             id="paper-details"
-            class="w-1/7 max-w-sm bg-white p-4 rounded-xl shadow-md transition-opacity duration-200 opacity-0 pointer-events-none"
+            class="flex-none w-[300px] h-[400px] bg-white p-4 rounded-xl shadow-md
+            transition-opacity duration-200 opacity-0 pointer-events-none
+            overflow-y-auto justify-center"
             >
            <h4 class="text-xl font-bold text-gray-800 mb-2" id="detail-title"></h4>
               <p class="text-sm text-gray-600 mb-1" id="detail-authors"></p>

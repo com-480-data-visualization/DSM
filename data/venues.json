@@ -1,0 +1,69 @@
+{
+  "venues": [
+    {
+      "name": "International Journal of Computer Vision",
+      "url": "https://link.springer.com/journal/11263",
+      "info": "International Journal of Computer Vision (IJCV) details the science and engineering of this rapidly growing field.\n\nCoverage includes:\n- Mathematical, physical and computational aspects of computer vision: image formation, processing, analysis, and interpretation; machine learning techniques; statistical approaches; sensors.\n- Applications: image-based rendering, computer graphics, robotics, photo interpretation, image retrieval, video analysis and annotation, multimedia, and more.\n- Connections with human perception: computational and architectural aspects of human vision.\n\nThe journal also features book reviews, position papers, editorials by leading scientific figures, as well as additional online material such as still images, video sequences, data sets, and software."
+    },
+    {
+      "name": "ACM Transactions on Intelligent Systems and Technology",
+      "url": "https://dl.acm.org/journal/tist",
+      "info": "ACM Transactions on Intelligent Systems and Technology (TIST) publishes the highest quality papers on intelligent systems, applicable algorithms and technology with a multi-disciplinary perspective.\n\nAn intelligent system is one that uses artificial intelligence (AI) techniques to:\n- Perceive real-world data,\n- Reason about it,\n- Learn from experience,\n- Act autonomously to provide important services within larger systems."
+    },
+    {
+      "name": "Management Information Systems Quarterly",
+      "url": "https://misq.umn.edu/",
+      "info": "MIS Quarterly (MISQ) focuses on the development, management, use, impact, and economics of information technology for managerial, organizational, and societal contexts.\n\nKey topics:\n- IT-based services and their design\n- Management of IT resources\n- Economic and organizational impacts of IT\n- Professional issues affecting the IS field as a whole"
+    },
+    {
+      "name": "Machine Learning",
+      "url": "https://link.springer.com/journal/10994",
+      "info": "Machine Learning is an international forum focusing on computational approaches to learning.\n\nThe journal:\n- Reports substantive results on a wide range of learning methods applied to various problems\n- Supports empirical studies, theoretical analysis, or comparisons to psychological phenomena\n- Demonstrates applications of learning methods to significant real-world issues\n- Prioritizes verifiable and replicable supporting evidence in all published papers"
+    },
+    {
+      "name": "Bell System Technical Journal",
+      "url": "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=6731005",
+      "info": "Originally the in-house journal of AT&T’s engineering labs, the Bell System Technical Journal (BSTJ) published foundational work in telecommunications and information theory.\n\nHighlights:\n- Birthplace of Claude Shannon’s information theory\n- Pioneering research in switching, coding, and network protocols\n- Historical archive of early digital and analog communication breakthroughs"
+    },
+    {
+      "name": "Bioinformatics",
+      "url": "https://academic.oup.com/bioinformatics",
+      "info": "Bioinformatics is the leading journal in genome bioinformatics and computational biology.\n\nFeatures:\n- High-quality scientific papers and review articles\n- Focus on new developments in genome analysis and computational biology\n- Application Notes section: shorter papers on software tools used in experiments\n- Fully open access as of January 2023"
+    },
+    {
+      "name": "IEEE Transactions on Evolutionary Computation",
+      "url": "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=4235",
+      "info": "The IEEE Transactions on Evolutionary Computation publishes archival quality papers in:\n- Nature-inspired algorithms\n- Population-based methods\n- Optimization techniques involving selection and variation\n- Hybrid systems combining evolutionary paradigms\n\nBoth theoretical and application-oriented papers providing general insights are welcome."
+    },
+    {
+      "name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "url": "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=34",
+      "info": "The IEEE Transactions on Pattern Analysis and Machine Intelligence (PAMI) covers:\n- Computer vision and image understanding\n- Pattern analysis and recognition\n- Machine intelligence with emphasis on machine learning for pattern analysis\n\nTopics include visual search, handwriting analysis, medical imaging, video analysis, content-based retrieval, face and gesture recognition, and related hardware/software architectures."
+    },
+    {
+      "name": "Computer Vision and Pattern Recognition",
+      "url": "https://arxiv.org/list/cs.CV/recent",
+      "info": "CVPR (Computer Vision and Pattern Recognition) is one of the premier annual conferences in computer vision.\n\nScope:\n- Novel methods in image and video analysis\n- Deep learning architectures for vision\n- 3D reconstruction, object detection, and segmentation\n- Applications in robotics, augmented reality, medical imaging, and more"
+    },
+    {
+      "name": "The Computer Journal",
+      "url": "https://academic.oup.com/comjnl",
+      "info": "The Computer Journal is one of the longest-established journals in computing science.\n\nSections:\n- **A: Theory, Methods and Tools** — computation theory, software, systems architecture, algorithms, discrete mathematics\n- **B: Networks and Systems** — computer and communications networks, related systems\n- **C: Computational Intelligence** — machine learning, neural networks, genetic algorithms, pattern recognition\n- **D: Security in Systems and Networks** — security and privacy in computer systems, applied cryptography"
+    },
+    {
+      "name": "Journal of Machine Learning Research",
+      "url": "https://www.jmlr.org/",
+      "info": "The Journal of Machine Learning Research (JMLR) provides an international forum for high-quality scholarly articles in all areas of machine learning.\n\nFounded in 2000, all published papers are freely available online."
+    },
+    {
+      "name": "IEEE Transactions on Image Processing",
+      "url": "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=83",
+      "info": "IEEE Transactions on Image Processing covers theory, algorithms, and architectures for:\n- Formation, capture, processing, communication, analysis, and display of images and video\n- Mathematical, statistical, and perceptual modeling\n- Filtering, enhancement, restoration, rendering, halftoning, and search\n\nApplications include biomedical imaging, remote sensing, multimedia communications, and more."
+    },
+    {
+      "name": "Journal of Computational Chemistry",
+      "url": "https://onlinelibrary.wiley.com/journal/1096987x",
+      "info": "The Journal of Computational Chemistry presents original research, methodological developments, and applications in all aspects of computational chemistry:\n- Analytical, biological, inorganic, organic, physical, material, and theoretical\n- Emphasis on high-performance algorithms and simulations"
+    }
+  ]
+}

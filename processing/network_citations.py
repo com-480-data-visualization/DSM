@@ -5,6 +5,7 @@ import os
 import networkx as nx
 import matplotlib.pyplot as plt
 from collections import defaultdict
+import csv
 
 class SemanticScholarClient:
     BASE_URL = "https://api.semanticscholar.org/graph/v1/paper/"
@@ -506,14 +507,16 @@ def main():
     # Example: U-Net paper ID on Semantic Scholar
     paper_id = input("Enter the Semantic Scholar paper ID (or press Enter for U-Net example): ")
     if not paper_id:
-        paper_id = "4e9ec92a90c5d571d2f1d496f8df01f0a8f38596" # Bitcoin paper
+        paper_id = "204e3073870fae3d05bcbc2f6a8e263d9b72e776"  # attention is all you need paper
+        #"627be67feb084f1266cfc36e5aed3c3e7e6ce5f0" # map reduce paper
+        #"4e9ec92a90c5d571d2f1d496f8df01f0a8f38596" # Bitcoin paper
         #"6364fdaa0a0eccd823a779fcdd489173f938e91a"  # U-Net paper
     
     # Create client
     client = SemanticScholarClient(max_retries=20, timeout=15, delay_between_requests=1)
     
     # Set parameters
-    max_depth = int(input("Enter maximum depth for citation network (default: 2): ") or 2)
+    max_depth = int(input("Enter maximum depth for citation network (default: 1): ") or 1)
     direction = input("Build network based on 'references' or 'citations'? (default: citations): ") or "citations"
     
     # Build citation network
@@ -529,7 +532,7 @@ def main():
     author_network = client.extract_author_collaboration_network(network_data)
     
     # Choose output format
-    output_format = input("Save data as 'json' or 'csv'? (default: json): ") or "json"
+    output_format = input("Save data as 'json' or 'csv'? (default: csv): ") or "csv"
     
     # Save data
     base_filename = f"semantic_scholar_{paper_id}_{direction}"
@@ -542,7 +545,7 @@ def main():
         save_to_csv(network_data, f"{output_dir}{base_filename}")
     
     # Visualize networks
-    visualize = input("Visualize networks? (y/n, default: y): ") or "y"
+    visualize = input("Visualize networks? (y/n, default: n): ") or "n"
     if visualize.lower() == "y":
          print("Creating visualizations...")
          visualize_citation_network(network_data, f"{output_dir}{base_filename}_visual.png")

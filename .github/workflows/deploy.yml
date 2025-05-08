@@ -1,8 +1,8 @@
 name: Deploy website
 on:
   push:
-    branches: ['master']
-    paths: ['.github/**', 'website/**']
+    branches: ["master"]
+    paths: [".github/**", "website/**"]
   workflow_dispatch:
 
 jobs:

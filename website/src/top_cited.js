@@ -1,10 +1,9 @@
-function formatNumberWithQuote(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-}
-
 function parseAuthors(raw) {
   if (!raw) return [];
-  return raw.split(';').map((d) => d.trim()).filter((a) => a.length > 0 && a.toLowerCase() !== 'nan');
+  return raw
+    .split(';')
+    .map((d) => d.trim())
+    .filter((a) => a.length > 0 && a.toLowerCase() !== 'nan');
 }
 
 let lastOpenPaperId = null;
@@ -71,28 +70,26 @@ function showDetails(paper) {
       ? `DOI Link: <a href="${paper.doi}" target="_blank" class="text-blue-600 underline">${paper.doi}</a>`
       : `🔗 DOI: N/A`
   );
-  const kwDiv = d3.select('#detail-keywords')
-    .html('')                    
-    .append('div')
-      .attr('class', 'mt-2');    
+  const kwDiv = d3.select('#detail-keywords').html('').append('div').attr('class', 'mt-2');
 
   if (paper.keyword) {
-    const kws = paper.keyword.split(';').map(k => k.trim()).filter(k => k);
-    const ul = kwDiv.append('ul')
+    const kws = paper.keyword
+      .split(';')
+      .map((k) => k.trim())
+      .filter((k) => k);
+    const ul = kwDiv
+      .append('ul')
       .attr('class', 'list-disc list-inside space-y-1 text-gray-700 text-sm');
 
-    ul.text("Keywords:")  
-    kws.forEach(k => {
+    ul.text('Keywords:');
+    kws.forEach((k) => {
       ul.append('li').text(k);
     });
   } else {
-    kwDiv.append('p')
-      .attr('class', 'text-sm text-gray-600')
-      .text('Keywords: None');
+    kwDiv.append('p').attr('class', 'text-sm text-gray-600').text('Keywords: None');
   }
 
-  d3.select('#paper-details')
-    .classed('opacity-0 pointer-events-none', false);
+  d3.select('#paper-details').classed('opacity-0 pointer-events-none', false);
 }
 
 function renderTopAuthors(papers) {
@@ -154,7 +151,7 @@ function renderTopAuthors(papers) {
     .attr('width', x.bandwidth())
     .attr('height', (d) => height - margin.top - margin.bottom - y(d.citations))
     .attr('fill', (d, i) => {
-      const c = color(i);
+      const c = color(d.name);
       colorMap.set(d.name, c);
       return c;
     });
@@ -162,94 +159,165 @@ function renderTopAuthors(papers) {
   return colorMap;
 }
 
-function renderSankey(papers, colorMap) {
-  const nodeSet = new Set();
-  const linkMap = new Map();
+let venueMeta = {};
+d3.json('data/venues.json').then((d) => {
+  d.venues.forEach((v) => {
+    const key = v.name.trim().toLowerCase();
+    venueMeta[key] = v;
+  });
+});
 
+function renderSankey(papers) {
+  const width = 700,
+    height = 500;
+
+  const nodeSet = new Set(),
+    linkMap = new Map();
   papers.forEach((p) => {
-    const authors = parseAuthors(p.author_name);
-    const venue = p.venue_name;
+    const authors = parseAuthors(p.author_name),
+      venue = p.venue_name && p.venue_name.trim();
     if (!venue) return;
     authors.forEach((name) => {
       const a = `A:${name}`,
-        v = `V:${venue}`;
+        v = `V:${venue}`,
+        key = `${a}|${v}`;
       nodeSet.add(a);
       nodeSet.add(v);
-      const key = `${a}|${v}`;
       linkMap.set(key, (linkMap.get(key) || 0) + 1);
     });
   });
+  const nodes = Array.from(nodeSet).map((name) => ({ name })),
+    nodeIndex = new Map(nodes.map((d, i) => [d.name, i])),
+    links = Array.from(linkMap.entries()).map(([key, value]) => {
+      const [s, t] = key.split('|');
+      return { source: nodeIndex.get(s), target: nodeIndex.get(t), value };
+    });
 
-  const nodes = Array.from(nodeSet).map((name) => ({ name }));
-  const nodeIndex = new Map(nodes.map((d, i) => [d.name, i]));
-  const links = Array.from(linkMap.entries()).map(([key, value]) => {
-    const [s, t] = key.split('|');
-    return { source: nodeIndex.get(s), target: nodeIndex.get(t), value };
-  });
-
-  const sankey = d3
+  // 2) Sankey layout
+  const { nodes: Lnodes, links: Llinks } = d3
     .sankey()
     .nodeWidth(15)
     .nodePadding(12)
     .extent([
       [1, 1],
-      [699, 499],
-    ]);
+      [width - 1, height - 1],
+    ])({ nodes, links });
 
-  const { nodes: layoutNodes, links: layoutLinks } = sankey({ nodes, links });
+  const authorNames = Lnodes.filter((d) => d.name.startsWith('A:')).map((d) => d.name.slice(2)),
+    venueNames = Lnodes.filter((d) => d.name.startsWith('V:')).map((d) => d.name.slice(2));
+  const authorColor = d3.scaleOrdinal(d3.schemeCategory10).domain(authorNames),
+    venueColor = d3.scaleOrdinal(d3.schemeSet3).domain(venueNames);
 
   const svg = d3
     .select('#sankey-chart')
     .html('')
     .append('svg')
-    .attr('width', 700)
-    .attr('height', 500);
+    .attr('width', width)
+    .attr('height', height);
 
-  svg
-    .append('g')
-    .selectAll('rect')
-    .data(layoutNodes)
-    .join('rect')
-    .attr('x', (d) => d.x0)
-    .attr('y', (d) => d.y0)
-    .attr('height', (d) => d.y1 - d.y0)
-    .attr('width', (d) => d.x1 - d.x0)
-    .attr('fill', (d) => {
-      if (d.name.startsWith('A:')) {
-        const author = d.name.slice(2);
-        return colorMap.get(author) || '#60a5fa';
-      }
-      return '#a78bfa';
-    });
+  function hideVenueDetails() {
+    d3.select('#venue-details')
+      .classed('hidden', true)
+      .classed('opacity-0', true)
+      .classed('pointer-events-none', true);
+  }
+  function showVenueDetails() {
+    d3.select('#venue-details')
+      .classed('hidden', false)
+      .classed('opacity-0', false)
+      .classed('pointer-events-none', false);
+  }
+  hideVenueDetails(); // start hidden
 
-  svg
-    .append('g')
-    .selectAll('text')
-    .data(layoutNodes)
-    .join('text')
-    .attr('x', (d) => (d.x0 < 350 ? d.x1 + 6 : d.x0 - 6))
-    .attr('y', (d) => (d.y0 + d.y1) / 2)
-    .attr('dy', '0.35em')
-    .attr('text-anchor', (d) => (d.x0 < 350 ? 'start' : 'end'))
-    .attr('fill', '#111827')
-    .style('font-size', '12px')
-    .text((d) => d.name.replace(/^A:|^V:/, ''));
+  let lastClicked = null;
 
   svg
     .append('g')
     .attr('fill', 'none')
     .selectAll('path')
-    .data(layoutLinks)
+    .data(Llinks)
     .join('path')
     .attr('d', d3.sankeyLinkHorizontal())
     .attr('stroke', '#d1d5db')
     .attr('stroke-width', (d) => Math.max(1, d.width))
     .attr('opacity', 0.5)
+    .on('mouseover', function (e, d) {
+      const auth = Lnodes[d.source.index].name.slice(2);
+      d3.select(this).attr('stroke', authorColor(auth)).attr('opacity', 0.8).raise();
+    })
+    .on('mouseout', function () {
+      d3.select(this).attr('stroke', '#d1d5db').attr('opacity', 0.5);
+    })
+    .on('click', function (e, d) {
+      if (lastClicked === this) {
+        lastClicked = null;
+        return hideVenueDetails();
+      }
+      lastClicked = this;
+      const ven = Lnodes[d.target.index].name.slice(2).trim().toLowerCase();
+      const meta = venueMeta[ven];
+
+      if (meta) {
+        d3.select('#venue-title').text(meta.name);
+        d3.select('#venue-url').attr('href', meta.url).text(meta.url);
+        d3.select('#venue-info').text(meta.info);
+      } else {
+        d3.select('#venue-title').text(Lnodes[d.target.index].name.slice(2));
+        d3.select('#venue-url').attr('href', '#').text('');
+        d3.select('#venue-info').text('No metadata available.');
+      }
+      showVenueDetails();
+    })
     .append('title')
-    .text(
-      (d) =>
-        `${layoutNodes[d.source.index].name.replace(/^A:/, '')} → ${layoutNodes[d.target.index].name.replace(/^V:/, '')}: ${d.value}`
-    );
+    .text((d) => `${Lnodes[d.target.index].name.slice(2)}: ${d.value}`);
+
+  const nodeRects = svg
+    .append('g')
+    .selectAll('rect')
+    .data(Lnodes)
+    .join('rect')
+    .attr('x', (d) => d.x0)
+    .attr('y', (d) => d.y0)
+    .attr('width', (d) => d.x1 - d.x0)
+    .attr('height', (d) => d.y1 - d.y0)
+    .attr('fill', (d) =>
+      d.name.startsWith('A:') ? authorColor(d.name.slice(2)) : venueColor(d.name.slice(2))
+    )
+    .attr('stroke', '#333')
+    .attr('stroke-width', 0.5)
+    .filter((d) => d.name.startsWith('V:'))
+    .on('click', function (e, d) {
+      if (lastClicked === this) {
+        lastClicked = null;
+        return hideVenueDetails();
+      }
+      lastClicked = this;
+      const key = d.name.slice(2).trim().toLowerCase(),
+        meta = venueMeta[key];
+      if (!meta) {
+        d3.select('#venue-title').text(d.name.slice(2));
+        d3.select('#venue-url').attr('href', '#').text('');
+        d3.select('#venue-info').text('No metadata available.');
+      } else {
+        d3.select('#venue-title').text(meta.name);
+        d3.select('#venue-url').attr('href', meta.url).text(meta.url);
+        d3.select('#venue-info').text(meta.info);
+      }
+      showVenueDetails();
+    });
+
+  svg
+    .append('g')
+    .selectAll('text')
+    .data(Lnodes)
+    .join('text')
+    .attr('x', (d) => (d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6))
+    .attr('y', (d) => (d.y0 + d.y1) / 2)
+    .attr('dy', '0.35em')
+    .attr('text-anchor', (d) => (d.x0 < width / 2 ? 'start' : 'end'))
+    .style('font-weight', 'bold')
+    .style('font-size', '12px')
+    .text((d) => d.name.replace(/^A:|^V:/, ''));
 }
 
 document.addEventListener('DOMContentLoaded', () => {

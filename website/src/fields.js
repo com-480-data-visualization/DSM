@@ -81,6 +81,18 @@
 
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
+
+    // load the graphs if the subfield has an associated paper
+    d3.select('#citation-network').html('');
+    d3.select('#authors-network').html('');
+    document.getElementById('authors-network-container').classList.add('hidden');
+    document.getElementById('citation-network-container').classList.add('hidden');
+
+    if (d.path != '' && d.path != undefined) {
+      document.getElementById('authors-network-container').classList.remove('hidden');
+      document.getElementById('citation-network-container').classList.remove('hidden');
+      loadGraphs(d.path);
+    }
   }
 
   function reset() {

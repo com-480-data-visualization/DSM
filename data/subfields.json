@@ -1,9 +1,16 @@
 [
   {
-    "text": "Computer Science",
-    "size": 120,
-    "field": ["root"],
-    "desc": "The study of computation, information, and the ingenious ways we process, store, and communicate them."
+    "text": "Distributed Computing",
+    "size": 60,
+    "field": ["distributed"],
+    "desc": "Making multiple computers work together to solve a common problem."
+  },
+  {
+    "text": "Blockchains",
+    "size": 30,
+    "field": ["distributed"],
+    "desc": "Distributed ledger with growing lists of records (blocks) that are securely linked together via cryptographic hashes.",
+    "path": "data/subfields/blockchains"
   },
   {
     "text": "CS Theory",
@@ -99,7 +106,8 @@
     "text": "NLP",
     "size": 30,
     "field": ["ai"],
-    "desc": "Natural-language processing—algorithms that let computers understand and generate human language."
+    "desc": "Natural-language processing—algorithms that let computers understand and generate human language.",
+    "path": "data/subfields/nlp"
   },
   {
     "text": "Computer Vision",

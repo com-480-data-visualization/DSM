@@ -3,11 +3,15 @@ function loadGraphs(path) {
     ([papersRaw, connections]) => {
       const paperIds = new Set();
       connections.forEach((c) => {
+        console.log(c);
         paperIds.add(c.source);
         paperIds.add(c.target);
       });
 
       const maxPapers = paperIds.size;
+      //log max papers and the ids
+      console.log('Max papers:', maxPapers);
+      console.log('Paper IDs:', Array.from(paperIds));
       const maxAuthors = new Set(
         papersRaw.flatMap((p) => (p.authors || '').split(';').map((a) => a.trim()))
       ).size;
@@ -90,6 +94,7 @@ function drawCitationGraph(papersRaw, connections, limit = 20) {
     .filter((n) => n.citations >= 0)
     .sort((a, b) => b.citations - a.citations)
     .slice(0, limit);
+  console.log('limit', limit);
 
   const filteredNodeIds = new Set(filteredNodes.map((n) => n.id));
   const filteredLinks = links.filter(

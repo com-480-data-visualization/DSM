@@ -64,6 +64,10 @@ The deliverables for milestone 2 can be found here:
 ## Milestone 3 (30th May, 5pm)
 
 **80% of the final grade**
+The deliverables for milestone 3 can be found here:
+- [**🎬 Screencast**](https://example.org)
+- [**📄 PDF**](process-book/milestone3.pdf)
+- [**🌐 Final visualization**](https://com-480-data-visualization.github.io/DSM/)
 
 ## Late policy
 

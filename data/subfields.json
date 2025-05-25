@@ -46,7 +46,8 @@
     "text": "OS",
     "size": 30,
     "field": ["systems"],
-    "desc": "Software that orchestrates hardware resources and provides services to applications."
+    "desc": "Software that orchestrates hardware resources and provides services to applications.",
+    "path": "data/subfields/os"
   },
   {
     "text": "Networks",
@@ -70,7 +71,8 @@
     "text": "Databases",
     "size": 30,
     "field": ["systems"],
-    "desc": "Models and engines for storing, querying, and managing structured information at scale."
+    "desc": "Models and engines for storing, querying, and managing structured information at scale.",
+    "path": "data/subfields/databases"
   },
   {
     "text": "Embedded Systems",
@@ -100,7 +102,15 @@
     "text": "Software Engineering",
     "size": 30,
     "field": ["systems"],
-    "desc": "Principles and tooling for designing, building, testing, and evolving reliable software."
+    "desc": "Principles and tooling for designing, building, testing, and evolving reliable software.",
+    "path": "data/subfields/software-engineering"
+  },
+  {
+    "text": "System Security",
+    "size": 30,
+    "field": ["systems"],
+    "desc": "Defending computer systems against threats by understanding vulnerabilities, developing mitigations, and building resilient architectures.",
+    "path": "data/subfields/system-security"
   },
   {
     "text": "NLP",

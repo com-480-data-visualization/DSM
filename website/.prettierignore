@@ -1,2 +1,4 @@
 # Ignore tailwindcss output
 src/output.css
+# Ignore all csv files
+**/*.csv

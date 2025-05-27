@@ -3,24 +3,14 @@ function loadGraphs(path) {
     ([papersRaw, connections]) => {
       const paperIds = new Set();
       connections.forEach((c) => {
-        console.log(c);
         paperIds.add(c.source);
         paperIds.add(c.target);
       });
 
       const maxPapers = paperIds.size;
-      //log max papers and the ids
-      console.log('Max papers:', maxPapers);
-      console.log('Paper IDs:', Array.from(paperIds));
       const maxAuthors = new Set(
         papersRaw.flatMap((p) => (p.authors || '').split(';').map((a) => a.trim()))
       ).size;
-
-      const paperSlider = document.getElementById('paper-count');
-      const paperValue = document.getElementById('paper-count-value');
-      paperSlider.max = maxPapers;
-      paperSlider.value = Math.min(20, maxPapers);
-      paperValue.textContent = paperSlider.value;
 
       const authorSlider = document.getElementById('author-count');
       const authorValue = document.getElementById('author-count-value');
@@ -28,13 +18,8 @@ function loadGraphs(path) {
       authorSlider.value = Math.min(100, maxAuthors);
       authorValue.textContent = authorSlider.value;
 
-      drawCitationGraph(papersRaw, connections, +paperSlider.value);
+      drawPapersByVenueSunburst(papersRaw);
       drawAuthorGraph(papersRaw, +authorSlider.value);
-
-      paperSlider.oninput = () => {
-        paperValue.textContent = paperSlider.value;
-        drawCitationGraph(papersRaw, connections, +paperSlider.value);
-      };
 
       authorSlider.oninput = () => {
         authorValue.textContent = authorSlider.value;
@@ -44,167 +29,137 @@ function loadGraphs(path) {
   );
 }
 
-function drawCitationGraph(papersRaw, connections, limit = 20) {
-  const width = 1200,
-    height = 900;
-  d3.select('#citation-network').html('');
+function drawPapersByVenueSunburst(papersRaw) {
+  d3.select("#citation-network").selectAll("*").remove();
 
-  const papers = {};
-  papersRaw.forEach((p) => {
-    papers[p.paper_id] = {
-      title: p.title,
-      year: +p.year,
-      authors: p.authors || 'Unknown author',
-      url: p.url || '#',
-    };
-  });
+  const papers = papersRaw.filter(p => p.venue?.trim() !== "");
 
-  const citationCounts = {};
-  connections.forEach((c) => {
-    citationCounts[c.target] = (citationCounts[c.target] || 0) + 1;
-  });
+  const data = { name: "root", children: [] };
+  const venueMap = new Map();
 
-  const nodeMap = {};
-  const allIds = new Set();
-  connections.forEach((c) => {
-    allIds.add(c.source);
-    allIds.add(c.target);
-  });
-
-  const nodes = [];
-  allIds.forEach((id) => {
-    const paper = papers[id];
-    if (paper) {
-      const node = {
-        id,
-        title: paper.title,
-        year: paper.year,
-        authors: paper.authors,
-        url: paper.url,
-        citations: citationCounts[id] || 0,
-      };
-      nodeMap[id] = node;
-      nodes.push(node);
+  papers.forEach(p => {
+    if (!venueMap.has(p.venue)) {
+      venueMap.set(p.venue, { name: p.venue, children: [] });
     }
+    venueMap.get(p.venue).children.push({
+      name: p.title,
+      paper_id: p.paper_id,
+      url: p.url
+    });
   });
 
-  const links = connections.filter((c) => nodeMap[c.source] && nodeMap[c.target]);
+  data.children = Array.from(venueMap.values())
+    .filter(venue => venue.children.length >= 5)
+    .slice(0, 10);
 
-  const filteredNodes = nodes
-    .filter((n) => n.citations >= 0)
-    .sort((a, b) => b.citations - a.citations)
-    .slice(0, limit);
-  console.log('limit', limit);
+  const width = 600;
+  const radius = width / 2;
 
-  const filteredNodeIds = new Set(filteredNodes.map((n) => n.id));
-  const filteredLinks = links.filter(
-    (l) => filteredNodeIds.has(l.source) && filteredNodeIds.has(l.target)
-  );
+  const partition = d3.partition().size([2 * Math.PI, radius]);
 
-  const mainPaper = filteredNodes.reduce(
-    (max, n) => (n.citations > max.citations ? n : max),
-    filteredNodes[0]
-  );
+  const root = d3.hierarchy(data)
+    .sum(d => d.children ? 0 : 1)
+    .sort((a, b) => b.value - a.value);
 
-  const centerX = width / 2;
-  const centerY = height / 2;
-  mainPaper.x = centerX;
-  mainPaper.y = centerY;
+  partition(root);
 
-  const others = filteredNodes.filter((n) => n.id !== mainPaper.id);
-  const radius = Math.min(width, height) / 3;
-  const angleStep = (2 * Math.PI) / others.length;
+  const arc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .innerRadius(d => d.y0)
+    .outerRadius(d => d.y1 - 1);
 
-  others.forEach((node, i) => {
-    const angle = i * angleStep;
-    node.x = centerX + radius * Math.cos(angle);
-    node.y = centerY + radius * Math.sin(angle);
-  });
+  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, root.children.length + 1));
 
-  const svg = d3
-    .select('#citation-network')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height);
+  const svg = d3.select("#citation-network")
+    .append("svg")
+    .attr("viewBox", [0, 0, width, width])
+    .attr("width", width)
+    .attr("height", width)
+    .style("display", "block")
+    .style("margin", "0 auto")
+    .style("font", "12px sans-serif");
 
-  const colorScale = d3
-    .scaleSequential()
-    .domain(d3.extent(filteredNodes, (d) => d.year))
-    .interpolator(d3.interpolateViridis);
+  const g = svg.append("g")
+    .attr("transform", `translate(${width / 2},${width / 2})`);
 
-  const sizeScale = d3
-    .scaleLinear()
-    .domain(d3.extent(filteredNodes, (d) => d.citations))
-    .range([10, 25]);
+  const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("background", "#fff")
+    .style("padding", "8px")
+    .style("border", "1px solid #aaa")
+    .style("border-radius", "4px")
+    .style("display", "none")
+    .style("pointer-events", "none");
 
-  svg
-    .append('g')
-    .attr('stroke', '#ccc')
-    .attr('stroke-opacity', 0.5)
-    .selectAll('line')
-    .data(filteredLinks)
-    .join('line')
-    .attr('x1', (d) => nodeMap[d.source].x)
-    .attr('y1', (d) => nodeMap[d.source].y)
-    .attr('x2', (d) => nodeMap[d.target].x)
-    .attr('y2', (d) => nodeMap[d.target].y)
-    .attr('stroke-width', 1);
-
-  const tooltip = d3
-    .select('body')
-    .append('div')
-    .attr('class', 'citation-tooltip')
-    .style('position', 'absolute')
-    .style('padding', '6px 8px')
-    .style('background', 'rgba(0,0,0,0.7)')
-    .style('color', 'white')
-    .style('border-radius', '4px')
-    .style('pointer-events', 'none')
-    .style('font-size', '14px')
-    .style('max-width', '400px')
-    .style('opacity', 0);
-
-  const node = svg
-    .append('g')
-    .selectAll('circle')
-    .data(filteredNodes)
-    .join('circle')
-    .attr('cx', (d) => d.x)
-    .attr('cy', (d) => d.y)
-    .attr('r', (d) => sizeScale(d.citations))
-    .attr('fill', (d) => colorScale(d.year))
-    .attr('stroke', '#333')
-    .attr('stroke-width', 1.5)
-    .style('cursor', (d) => (d.url && d.url !== '#' ? 'pointer' : 'default'))
-    .on('mouseover', function (event, d) {
-      tooltip
-        .html(`<strong>${d.title}</strong><br/>Author(s): ${d.authors}`)
-        .style('left', event.pageX + 10 + 'px')
-        .style('top', event.pageY + 10 + 'px')
-        .style('opacity', 1);
+  g.selectAll("path")
+    .data(root.descendants().filter(d => d.depth))
+    .join("path")
+    .attr("fill", d => color(d.ancestors()[1]?.data.name || d.data.name))
+    .attr("d", arc)
+    .on("mouseover", function (event, d) {
+      d3.select(this).attr("stroke", "#000");
+      tooltip.style("display", "block")
+        .html(`<strong>${d.data.name}</strong>`);
     })
-    .on('mousemove', function (event) {
-      tooltip.style('left', event.pageX + 10 + 'px').style('top', event.pageY + 10 + 'px');
+    .on("mousemove", function (event) {
+      tooltip.style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 20) + "px");
     })
-    .on('mouseout', function () {
-      tooltip.style('opacity', 0);
+    .on("mouseout", function () {
+      d3.select(this).attr("stroke", null);
+      tooltip.style("display", "none");
     })
-    .on('click', (event, d) => {
-      if (d.url && d.url !== '#') {
-        window.open(d.url, '_blank');
+    .on("click", (event, d) => {
+      if (d.data.url) {
+        window.open(d.data.url, "_blank");
       }
     });
 
-  svg
-    .append('g')
-    .selectAll('text')
-    .data(filteredNodes)
-    .join('text')
-    .attr('x', (d) => d.x + 20)
-    .attr('y', (d) => d.y + 6)
-    .text((d) => (d.title.length > 20 ? d.title.slice(0, 20) + '...' : d.title))
-    .attr('font-size', 16)
-    .attr('fill', '#333');
+const label = g.append("g")
+  .attr("pointer-events", "none")
+  .attr("text-anchor", "middle")
+  .selectAll("text")
+  .data(root.descendants().filter(d => d.depth > 0)) 
+  .join("text")
+  .attr("transform", function(d) {
+    const angle = (d.x0 + d.x1) / 2 * 180 / Math.PI - 90;
+    const radius = (d.y0 + d.y1) / 2;
+    return `rotate(${angle}) translate(${radius},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
+  })
+  .attr("dy", "0.35em")
+  .attr("x", 0)
+  .style("text-anchor", "middle")
+  .style("font-size", "10px")
+  .style("fill", "#fff")
+  .text(d => {
+    const span = d.x1 - d.x0;
+
+    if (d.depth === 1) {
+      const words = d.data.name.split(/\s+/);
+      const acronym = words.find(w => /^[A-Z]{2,}$/.test(w));
+      const fallback = words.find(w => /^[A-Z]/.test(w) && w !== acronym);
+      return acronym ? `${acronym}${fallback ? ' (' + fallback + ')' : ''}` : d.data.name.slice(0, 10);
+    }
+
+    if (d.depth === 2) {
+      const maxChars = span > 0.08 ? 20 : span > 0.05 ? 12 : 0;
+      if (maxChars === 0) return '';
+      let words = d.data.name.split(' ');
+      let result = '';
+      for (let word of words) {
+        if ((result + word).length <= maxChars) {
+          result += (result ? ' ' : '') + word;
+        } else {
+          break;
+        }
+      }
+      return result + (result.length < d.data.name.length ? '…' : '');
+    }
+
+    return '';
+  });
 }
 
 function drawAuthorGraph(papersRaw, limit = 100) {

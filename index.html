@@ -38,6 +38,12 @@
   </head>
 
   <style>
+    body.intro-active,
+    html.intro-active {
+      overflow: hidden;
+      height: 100%;
+    }
+
     .header-gradient {
       background: linear-gradient(135deg, #ffd6e0, #c1c8ff);
     }
@@ -79,7 +85,7 @@
     }
   </style>
 
-  <body class="flex flex-col min-h-full">
+  <body class="flex flex-col min-h-full intro-active">
     <section
       id="intro"
       class="fixed inset-0 bg-white flex flex-col items-center justify-center space-y-6 z-50"
@@ -318,9 +324,14 @@
       document.getElementById('intro-arrow').addEventListener('click', () => {
         const intro = document.getElementById('intro');
         const content = document.getElementById('site-content');
+
+        document.body.classList.remove('intro-active');
+        document.documentElement.classList.remove('intro-active');
+
         intro.classList.add('opacity-0', 'pointer-events-none');
         setTimeout(() => intro.remove(), 700);
         content.classList.remove('opacity-0');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     </script>
     <script>

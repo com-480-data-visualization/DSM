@@ -123,7 +123,8 @@
     "text": "Computer Vision",
     "size": 30,
     "field": ["ai"],
-    "desc": "Techniques that enable machines to interpret and act upon visual information."
+    "desc": "Techniques that enable machines to interpret and act upon visual information.",
+    "path": "data/subfields/vision"
   },
   {
     "text": "Programming Languages",

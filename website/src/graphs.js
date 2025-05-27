@@ -25,26 +25,26 @@ function loadGraphs(path) {
 }
 
 function drawPapersByVenueSunburst(papersRaw) {
-  d3.select("#citation-network").selectAll("*").remove();
+  d3.select('#citation-network').selectAll('*').remove();
 
-  const papers = papersRaw.filter(p => p.venue?.trim() !== "");
+  const papers = papersRaw.filter((p) => p.venue?.trim() !== '');
 
-  const data = { name: "root", children: [] };
+  const data = { name: 'root', children: [] };
   const venueMap = new Map();
 
-  papers.forEach(p => {
+  papers.forEach((p) => {
     if (!venueMap.has(p.venue)) {
       venueMap.set(p.venue, { name: p.venue, children: [] });
     }
     venueMap.get(p.venue).children.push({
       name: p.title,
       paper_id: p.paper_id,
-      url: p.url
+      url: p.url,
     });
   });
 
   data.children = Array.from(venueMap.values())
-    .filter(venue => venue.children.length >= 5)
+    .filter((venue) => venue.children.length >= 5)
     .slice(0, 10);
 
   const width = 600;
@@ -52,109 +52,114 @@ function drawPapersByVenueSunburst(papersRaw) {
 
   const partition = d3.partition().size([2 * Math.PI, radius]);
 
-  const root = d3.hierarchy(data)
-    .sum(d => d.children ? 0 : 1)
+  const root = d3
+    .hierarchy(data)
+    .sum((d) => (d.children ? 0 : 1))
     .sort((a, b) => b.value - a.value);
 
   partition(root);
 
-  const arc = d3.arc()
-    .startAngle(d => d.x0)
-    .endAngle(d => d.x1)
-    .innerRadius(d => d.y0)
-    .outerRadius(d => d.y1 - 1);
+  const arc = d3
+    .arc()
+    .startAngle((d) => d.x0)
+    .endAngle((d) => d.x1)
+    .innerRadius((d) => d.y0)
+    .outerRadius((d) => d.y1 - 1);
 
   const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, root.children.length + 1));
 
-  const svg = d3.select("#citation-network")
-    .append("svg")
-    .attr("viewBox", [0, 0, width, width])
-    .attr("width", width)
-    .attr("height", width)
-    .style("display", "block")
-    .style("margin", "0 auto")
-    .style("font", "12px sans-serif");
+  const svg = d3
+    .select('#citation-network')
+    .append('svg')
+    .attr('viewBox', [0, 0, width, width])
+    .attr('width', width)
+    .attr('height', width)
+    .style('display', 'block')
+    .style('margin', '0 auto')
+    .style('font', '12px sans-serif');
 
-  const g = svg.append("g")
-    .attr("transform", `translate(${width / 2},${width / 2})`);
+  const g = svg.append('g').attr('transform', `translate(${width / 2},${width / 2})`);
 
-  const tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("position", "absolute")
-    .style("background", "#fff")
-    .style("padding", "8px")
-    .style("border", "1px solid #aaa")
-    .style("border-radius", "4px")
-    .style("display", "none")
-    .style("pointer-events", "none");
+  const tooltip = d3
+    .select('body')
+    .append('div')
+    .attr('class', 'tooltip')
+    .style('position', 'absolute')
+    .style('background', '#fff')
+    .style('padding', '8px')
+    .style('border', '1px solid #aaa')
+    .style('border-radius', '4px')
+    .style('display', 'none')
+    .style('pointer-events', 'none');
 
-  g.selectAll("path")
-    .data(root.descendants().filter(d => d.depth))
-    .join("path")
-    .attr("fill", d => color(d.ancestors()[1]?.data.name || d.data.name))
-    .attr("d", arc)
-    .on("mouseover", function (event, d) {
-      d3.select(this).attr("stroke", "#000");
-      tooltip.style("display", "block")
-        .html(`<strong>${d.data.name}</strong>`);
+  g.selectAll('path')
+    .data(root.descendants().filter((d) => d.depth))
+    .join('path')
+    .attr('fill', (d) => color(d.ancestors()[1]?.data.name || d.data.name))
+    .attr('d', arc)
+    .on('mouseover', function (event, d) {
+      d3.select(this).attr('stroke', '#000');
+      tooltip.style('display', 'block').html(`<strong>${d.data.name}</strong>`);
     })
-    .on("mousemove", function (event) {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
+    .on('mousemove', function (event) {
+      tooltip.style('left', event.pageX + 10 + 'px').style('top', event.pageY - 20 + 'px');
     })
-    .on("mouseout", function () {
-      d3.select(this).attr("stroke", null);
-      tooltip.style("display", "none");
+    .on('mouseout', function () {
+      d3.select(this).attr('stroke', null);
+      tooltip.style('display', 'none');
     })
-    .on("click", (event, d) => {
+    .on('click', (event, d) => {
       if (d.data.url) {
-        window.open(d.data.url, "_blank");
+        window.open(d.data.url, '_blank');
       }
     });
 
-const label = g.append("g")
-  .attr("pointer-events", "none")
-  .attr("text-anchor", "middle")
-  .selectAll("text")
-  .data(root.descendants().filter(d => d.depth > 0)) 
-  .join("text")
-  .attr("transform", function(d) {
-    const angle = (d.x0 + d.x1) / 2 * 180 / Math.PI - 90;
-    const radius = (d.y0 + d.y1) / 2;
-    return `rotate(${angle}) translate(${radius},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
-  })
-  .attr("dy", "0.35em")
-  .attr("x", 0)
-  .style("text-anchor", "middle")
-  .style("font-size", "10px")
-  .style("fill", "#fff")
-  .text(d => {
-    const span = d.x1 - d.x0;
+  const label = g
+    .append('g')
+    .attr('pointer-events', 'none')
+    .attr('text-anchor', 'middle')
+    .selectAll('text')
+    .data(root.descendants().filter((d) => d.depth > 0))
+    .join('text')
+    .attr('transform', function (d) {
+      const angle = (((d.x0 + d.x1) / 2) * 180) / Math.PI - 90;
+      const radius = (d.y0 + d.y1) / 2;
+      return `rotate(${angle}) translate(${radius},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
+    })
+    .attr('dy', '0.35em')
+    .attr('x', 0)
+    .style('text-anchor', 'middle')
+    .style('font-size', '10px')
+    .style('fill', '#fff')
+    .text((d) => {
+      const span = d.x1 - d.x0;
 
-    if (d.depth === 1) {
-      const words = d.data.name.split(/\s+/);
-      const acronym = words.find(w => /^[A-Z]{2,}$/.test(w));
-      const fallback = words.find(w => /^[A-Z]/.test(w) && w !== acronym);
-      return acronym ? `${acronym}${fallback ? ' (' + fallback + ')' : ''}` : d.data.name.slice(0, 10);
-    }
-
-    if (d.depth === 2) {
-      const maxChars = span > 0.08 ? 20 : span > 0.05 ? 12 : 0;
-      if (maxChars === 0) return '';
-      let words = d.data.name.split(' ');
-      let result = '';
-      for (let word of words) {
-        if ((result + word).length <= maxChars) {
-          result += (result ? ' ' : '') + word;
-        } else {
-          break;
-        }
+      if (d.depth === 1) {
+        const words = d.data.name.split(/\s+/);
+        const acronym = words.find((w) => /^[A-Z]{2,}$/.test(w));
+        const fallback = words.find((w) => /^[A-Z]/.test(w) && w !== acronym);
+        return acronym
+          ? `${acronym}${fallback ? ' (' + fallback + ')' : ''}`
+          : d.data.name.slice(0, 10);
       }
-      return result + (result.length < d.data.name.length ? '…' : '');
-    }
 
-    return '';
-  });
+      if (d.depth === 2) {
+        const maxChars = span > 0.08 ? 20 : span > 0.05 ? 12 : 0;
+        if (maxChars === 0) return '';
+        let words = d.data.name.split(' ');
+        let result = '';
+        for (let word of words) {
+          if ((result + word).length <= maxChars) {
+            result += (result ? ' ' : '') + word;
+          } else {
+            break;
+          }
+        }
+        return result + (result.length < d.data.name.length ? '…' : '');
+      }
+
+      return '';
+    });
 }
 
 function getMainAuthor(papersRaw, connections, limit = 20) {

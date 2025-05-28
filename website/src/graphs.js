@@ -12,12 +12,6 @@ function loadGraphs(path) {
         papersRaw.flatMap((p) => (p.authors || '').split(';').map((a) => a.trim()))
       ).size;
 
-      const authorSlider = document.getElementById('author-count');
-      const authorValue = document.getElementById('author-count-value');
-      // authorSlider.max = maxAuthors;
-      // authorSlider.value = Math.min(100, maxAuthors);
-      // authorValue.textContent = authorSlider.value;
-
       drawPapersByVenueSunburst(papersRaw);
       drawAuthorGraph(getMainAuthor(papersRaw, connections), papersRaw);
     }
@@ -27,49 +21,119 @@ function loadGraphs(path) {
 function drawPapersByVenueSunburst(papersRaw) {
   d3.select('#citation-network').selectAll('*').remove();
 
-  const papers = papersRaw.filter((p) => p.venue?.trim() !== '');
+  const papers = papersRaw.filter(p => p.venue?.trim() !== '');
+  const mainPaper = papersRaw[0];
+  const mainPaperId = mainPaper?.paper_id;
 
   const data = { name: 'root', children: [] };
   const venueMap = new Map();
 
-  papers.forEach((p) => {
+  papers.forEach(p => {
     if (!venueMap.has(p.venue)) {
       venueMap.set(p.venue, { name: p.venue, children: [] });
     }
     venueMap.get(p.venue).children.push({
       name: p.title,
       paper_id: p.paper_id,
-      url: p.url,
+      url: p.url
     });
   });
 
-  data.children = Array.from(venueMap.values())
-    .filter((venue) => venue.children.length >= 5)
-    .slice(0, 10);
+  if (mainPaper.venue.trim() === '') {
+    mainPaper.venue = 'Unknown Venue';
+  }
+
+const sortedVenues = Array.from(venueMap.values())
+  .sort((a, b) => b.children.length - a.children.length);
+
+let totalPapers = 0;
+const limitedVenues = [];
+
+  let mainPaperAdded = false;
+
+  for (const venue of sortedVenues) {
+    if (totalPapers >= 50) break;
+
+    const papersFromVenue = [];
+    for (let paper of venue.children) {
+      if (papersFromVenue.length < 10 && totalPapers < 50) {
+        papersFromVenue.push(paper);
+        totalPapers++;
+        if (paper.paper_id === mainPaperId) {
+          mainPaperAdded = true;
+        }
+      }
+    }
+
+    if (papersFromVenue.length > 0) {
+      limitedVenues.push({
+        name: venue.name,
+        children: papersFromVenue
+      });
+    }
+  }
+
+    if (!mainPaperAdded) {
+      let added = false;
+
+      for (let venue of limitedVenues) {
+        if (venue.name === mainPaper.venue) {
+          venue.children.push({
+            name: mainPaper.title,
+            paper_id: mainPaper.paper_id,
+            url: mainPaper.url
+          });
+          totalPapers++;
+          added = true;
+          break;
+        }
+      }
+
+      if (!added) {
+        limitedVenues.push({
+          name: mainPaper.venue,
+          children: [{
+            name: mainPaper.title,
+            paper_id: mainPaper.paper_id,
+            url: mainPaper.url
+          }].concat(venueMap.get(mainPaper.venue)?.children.filter(p => p.paper_id != mainPaperId).slice(0, 9) || [])
+        });
+        totalPapers++;
+      }
+    }
+
+  data.children = limitedVenues;
 
   const width = 600;
   const radius = width / 2;
+  const margin = 50;
 
   const partition = d3.partition().size([2 * Math.PI, radius]);
 
-  const root = d3
-    .hierarchy(data)
-    .sum((d) => (d.children ? 0 : 1))
+  const root = d3.hierarchy(data)
+    .sum(d => d.children ? 0 : 1)
     .sort((a, b) => b.value - a.value);
 
   partition(root);
 
-  const arc = d3
-    .arc()
-    .startAngle((d) => d.x0)
-    .endAngle((d) => d.x1)
-    .innerRadius((d) => d.y0)
-    .outerRadius((d) => d.y1 - 1);
+  const baseColor = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, root.children.length + 1));
+  const colorMap = new Map();
+  root.children.forEach((venueNode, i) => {
+    colorMap.set(venueNode.data.name, baseColor(i));
+  });
+  const highlightColor = '#FF0000';
 
-  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, root.children.length + 1));
+  // Arc generator with larger outer radius for papers
+  const arc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .innerRadius(d => d.y0)
+    .outerRadius(d => {
+      if (d.depth === 2) return d.y1 + 30; // extend outer arcs
+      return d.y1 - 1;
+    });
 
-  const svg = d3
-    .select('#citation-network')
+  const svg = d3.select('#citation-network')
     .append('svg')
     .attr('viewBox', [0, 0, width, width])
     .attr('width', width)
@@ -77,11 +141,13 @@ function drawPapersByVenueSunburst(papersRaw) {
     .style('display', 'block')
     .style('margin', '0 auto')
     .style('font', '12px sans-serif');
+  
+  svg.attr('viewBox', [0 - margin, 0 - margin, width + 2 * margin, width + 2 * margin])
 
-  const g = svg.append('g').attr('transform', `translate(${width / 2},${width / 2})`);
+  const g = svg.append('g')
+    .attr('transform', `translate(${width / 2},${width / 2})`);
 
-  const tooltip = d3
-    .select('body')
+  const tooltip = d3.select('body')
     .append('div')
     .attr('class', 'tooltip')
     .style('position', 'absolute')
@@ -93,9 +159,17 @@ function drawPapersByVenueSunburst(papersRaw) {
     .style('pointer-events', 'none');
 
   g.selectAll('path')
-    .data(root.descendants().filter((d) => d.depth))
+    .data(root.descendants().filter(d => d.depth))
     .join('path')
-    .attr('fill', (d) => color(d.ancestors()[1]?.data.name || d.data.name))
+    .attr('fill', d => {
+      if (d.data.paper_id === mainPaperId) return highlightColor;
+      if (d.depth === 1) return colorMap.get(d.data.name) || '#ccc';
+      if (d.depth === 2) {
+        const venueName = d.ancestors()[1]?.data.name;
+        return colorMap.get(venueName) || '#ccc';
+      }
+      return '#ccc';
+    })
     .attr('d', arc)
     .on('mouseover', function (event, d) {
       d3.select(this).attr('stroke', '#000');
@@ -109,51 +183,46 @@ function drawPapersByVenueSunburst(papersRaw) {
       tooltip.style('display', 'none');
     })
     .on('click', (event, d) => {
-      if (d.data.url) {
-        window.open(d.data.url, '_blank');
-      }
+      if (d.data.url) window.open(d.data.url, '_blank');
     });
 
-  const label = g
-    .append('g')
+  // Labels
+  g.append('g')
     .attr('pointer-events', 'none')
     .attr('text-anchor', 'middle')
     .selectAll('text')
-    .data(root.descendants().filter((d) => d.depth > 0))
+    .data(root.descendants().filter(d => d.depth > 0))
     .join('text')
-    .attr('transform', function (d) {
+    .attr('transform', d => {
       const angle = (((d.x0 + d.x1) / 2) * 180) / Math.PI - 90;
-      const radius = (d.y0 + d.y1) / 2;
-      return `rotate(${angle}) translate(${radius},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
+      const r = (d.y0 + d.y1) / 2 + (d.depth === 2 ? 5 : 0);
+      return `rotate(${angle}) translate(${r},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
     })
     .attr('dy', '0.35em')
-    .attr('x', 0)
     .style('text-anchor', 'middle')
     .style('font-size', '10px')
     .style('fill', '#fff')
-    .text((d) => {
+    .text(d => {
       const span = d.x1 - d.x0;
 
       if (d.depth === 1) {
         const words = d.data.name.split(/\s+/);
-        const acronym = words.find((w) => /^[A-Z]{2,}$/.test(w));
-        const fallback = words.find((w) => /^[A-Z]/.test(w) && w !== acronym);
+        const acronym = words.find(w => /^[A-Z]{2,}$/.test(w));
+        const fallback = words.find(w => /^[A-Z]/.test(w) && w !== acronym);
         return acronym
           ? `${acronym}${fallback ? ' (' + fallback + ')' : ''}`
           : d.data.name.slice(0, 10);
       }
 
       if (d.depth === 2) {
-        const maxChars = span > 0.08 ? 20 : span > 0.05 ? 12 : 0;
+        const maxChars = span > 0.08 ? 20 : span > 0.05 ? 15 : 0;
         if (maxChars === 0) return '';
         let words = d.data.name.split(' ');
         let result = '';
         for (let word of words) {
           if ((result + word).length <= maxChars) {
             result += (result ? ' ' : '') + word;
-          } else {
-            break;
-          }
+          } else break;
         }
         return result + (result.length < d.data.name.length ? '…' : '');
       }

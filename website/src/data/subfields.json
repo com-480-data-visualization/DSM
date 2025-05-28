@@ -53,13 +53,15 @@
     "text": "Networks",
     "size": 30,
     "field": ["systems"],
-    "desc": "Protocols and architectures that move data reliably between devices and across the globe."
+    "desc": "Protocols and architectures that move data reliably between devices and across the globe.",
+    "path": "data/subfields/networks"
   },
   {
     "text": "Architecture",
     "size": 30,
     "field": ["systems"],
-    "desc": "Design and optimisation of the processors and memory hierarchies that execute instructions."
+    "desc": "Design and optimisation of the processors and memory hierarchies that execute instructions.",
+    "path": "data/subfields/architecture"
   },
   {
     "text": "Measurement",

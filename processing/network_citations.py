@@ -536,7 +536,7 @@ def main():
     
     # Save data
     base_filename = f"semantic_scholar_{paper_id}_{direction}"
-    output_dir = "/home/syrine/Desktop/MA4/DataViz/citations/"
+    output_dir = "graph_data/"
     
     if output_format.lower() == "json":
         save_to_json(network_data, f"{output_dir}{base_filename}_network.json")

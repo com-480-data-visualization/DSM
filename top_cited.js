@@ -1,24 +1,17 @@
+/**-------------utility functions---------------------*/
 function parseAuthors(raw) {
   if (!raw) return [];
   return raw
     .split(';')
     .map((d) => d.trim())
-    .filter((a) => a.length > 0 && a.toLowerCase() !== 'nan');
+    .filter((a) => a && a.length > 0 && a.toLowerCase() !== 'nan');
 }
-
-let lastOpenPaperId = null;
 
 function formatNumberWithQuote(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 }
 
-function parseAuthors(raw) {
-  if (!raw) return [];
-  return raw
-    .split(';')
-    .map((d) => d.trim())
-    .filter((a) => a && a.toLowerCase() !== 'nan');
-}
+/**-------------rendering functions---------------------*/
 
 function renderPapers(papers) {
   const container = d3.select('#top-cited-papers').html('');
@@ -43,6 +36,8 @@ function renderPapers(papers) {
       );
   });
 }
+
+let lastOpenPaperId = null;
 
 function toggleDetails(paper) {
   const detailsEl = d3.select('#paper-details');

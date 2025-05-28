@@ -15,11 +15,10 @@
 
   /* ---------- DOM refs ---------- */
   const container = document.getElementById('cloud-container');
-  const infoBox = document.getElementById('info-box');
   const infoTitle = document.getElementById('info-title');
   const infoDesc = document.getElementById('info-desc');
   const infoPaper = document.getElementById('info-paper');
-  let svg; // will hold current svg
+  let svg;
 
   /* ---------- load JSON then draw ---------- */
   fetch('./data/subfields.json')
@@ -82,7 +81,11 @@
 
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
-    infoPaper.textContent = 'Let\'s dive into the "' + d.paper + '" paper!';
+    if (d.paper !== '' && d.paper !== undefined) {
+      infoPaper.textContent = 'Let\'s dive into the "' + d.paper + '" paper!';
+    } else {
+      infoPaper.textContent = '';
+    }
 
     // load the graphs if the subfield has an associated paper
     d3.select('#citation-network').html('');

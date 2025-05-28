@@ -11,6 +11,8 @@ function formatNumberWithQuote(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 }
 
+/**-------------rendering functions---------------------*/
+
 function renderPapers(papers) {
   const container = d3.select('#top-cited-papers').html('');
   papers.forEach((paper, i) => {

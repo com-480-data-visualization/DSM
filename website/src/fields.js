@@ -15,11 +15,10 @@
 
   /* ---------- DOM refs ---------- */
   const container = document.getElementById('cloud-container');
-  const infoBox = document.getElementById('info-box');
   const infoTitle = document.getElementById('info-title');
   const infoDesc = document.getElementById('info-desc');
   const infoPaper = document.getElementById('info-paper');
-  let svg; // will hold current svg
+  let svg;
 
   /* ---------- load JSON then draw ---------- */
   fetch('./data/subfields.json')

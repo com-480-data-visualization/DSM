@@ -249,6 +249,9 @@
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
   .top-2 {
     top: calc(var(--spacing) * 2);
   }
@@ -263,6 +266,9 @@
   }
   .bottom-full {
     bottom: 100%;
+  }
+  .left-0 {
+    left: calc(var(--spacing) * 0);
   }
   .left-1\/2 {
     left: calc(1/2 * 100%);
@@ -314,9 +320,6 @@
   }
   .my-20 {
     margin-block: calc(var(--spacing) * 20);
-  }
-  .mt-1 {
-    margin-top: calc(var(--spacing) * 1);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -455,9 +458,6 @@
   }
   .max-w-2xl {
     max-width: var(--container-2xl);
-  }
-  .max-w-screen-lg {
-    max-width: var(--breakpoint-lg);
   }
   .flex-none {
     flex: none;
@@ -696,6 +696,9 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .fill-gray-700 {
+    fill: var(--color-gray-700);
+  }
   .object-cover {
     object-fit: cover;
   }
@@ -737,6 +740,9 @@
   }
   .py-20 {
     padding-block: calc(var(--spacing) * 20);
+  }
+  .pt-35 {
+    padding-top: calc(var(--spacing) * 35);
   }
   .text-center {
     text-align: center;
@@ -996,6 +1002,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-gray-700);
+      }
+    }
+  }
+  .hover\:text-gray-800 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-gray-800);
       }
     }
   }

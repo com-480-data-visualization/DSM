@@ -67,6 +67,26 @@ document.addEventListener('DOMContentLoaded', () => {
       .style('pointer-events', 'none')
       .text((d) => d[0]);
 
+    const labelPositions = Object.entries(data.subfields)
+      .map(([name, values]) => ({
+        name,
+        yValue: y(values.smooth[values.smooth.length - 1]),
+      }))
+      .sort((a, b) => a.yValue - b.yValue);
+
+    // Adjust label y positions with vertical spacing
+    let lastY = -Infinity;
+    const labelPadding = 14;
+
+    labels.attr('y', (d, i) => {
+      let yPos = labelPositions[i].yValue;
+      if (yPos - lastY < labelPadding) {
+        yPos = lastY + labelPadding;
+      }
+      lastY = yPos;
+      return yPos;
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

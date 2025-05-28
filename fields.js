@@ -18,6 +18,7 @@
   const infoBox = document.getElementById('info-box');
   const infoTitle = document.getElementById('info-title');
   const infoDesc = document.getElementById('info-desc');
+  const infoPaper = document.getElementById('info-paper');
   let svg; // will hold current svg
 
   /* ---------- load JSON then draw ---------- */
@@ -81,6 +82,7 @@
 
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
+    infoPaper.textContent = 'Let\'s dive into the "' + d.paper + '" paper!';
 
     // load the graphs if the subfield has an associated paper
     d3.select('#citation-network').html('');
@@ -100,6 +102,7 @@
 
     infoTitle.textContent = '';
     infoDesc.textContent = '';
+    infoPaper.textContent = '';
   }
 
   function opacityRule(t, clicked) {

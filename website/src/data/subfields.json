@@ -24,7 +24,7 @@
     "desc": "Focused on designing the core structural elements of computing hardware, including processor cores, memory hierarchies, and interconnects, optimizing for speed, power efficiency, and cost to maximize computational throughput.",
     "path": "data/subfields/architecture",
     "paper": "The microarchitecture of superscalar processors"
-  },  
+  },
   {
     "text": "Distributed Computing",
     "size": 30,
@@ -33,7 +33,7 @@
     "path": "data/subfields/blockchains",
     "paper": "Bitcoin: A Peer-to-Peer Electronic Cash System"
   },
-    {
+  {
     "text": "Databases",
     "size": 30,
     "field": ["systems"],
@@ -64,7 +64,7 @@
     "desc": "Creating computational methods and models that allow machines to process, understand, and generate human languages, enabling applications such as translation, sentiment analysis, and conversational agents.",
     "path": "data/subfields/nlp",
     "paper": "Attention is all you need"
-  },  
+  },
   {
     "text": "OS",
     "size": 30,
@@ -72,7 +72,7 @@
     "desc": "Building foundational software that manages hardware resources, provides abstractions for applications, handles scheduling, memory management, and input/output operations, ensuring system stability and efficiency.",
     "path": "data/subfields/os",
     "paper": "Disco: running commodity operating systems on scalable multiprocessors"
-  },    
+  },
   {
     "text": "Signal Theory",
     "size": 30,
@@ -81,7 +81,7 @@
     "path": "data/subfields/signal-theory",
     "paper": "Adaptive filtering in subbands with critical sampling: analysis, experiments, and application to acoustic echo cancellation"
   },
-    {
+  {
     "text": "Software Engineering",
     "size": 30,
     "field": ["systems"],
@@ -104,7 +104,7 @@
     "desc": "Analyzing the inherent difficulty of computational problems by categorizing them according to the resources (such as time and memory) needed for their solutions, and exploring the boundaries of efficient computation.",
     "path": "data/subfields/theory",
     "paper": "Deterministic Communication vs. Partition Number"
-  },  
+  },
   {
     "text": "Computer Vision",
     "size": 30,

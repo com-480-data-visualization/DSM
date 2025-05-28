@@ -140,7 +140,8 @@ function renderTopAuthors(papers) {
 
   chart.append('g').call(d3.axisLeft(y));
   // Y-axis label
-  svg.append('text')
+  svg
+    .append('text')
     .attr('transform', `rotate(-90)`)
     .attr('x', -height / 2)
     .attr('y', 15) // smaller value to bring it closer to chart
@@ -148,14 +149,14 @@ function renderTopAuthors(papers) {
     .attr('class', 'text-sm font-semibold fill-gray-700')
     .text('Total Citations');
 
-    // X-axis label
-    svg.append('text')
-      .attr('x', width / 2)
-      .attr('y', height - 10)
-      .attr('text-anchor', 'middle')
-      .attr('class', 'text-sm font-semibold fill-gray-700')
-      .text('Author');
-
+  // X-axis label
+  svg
+    .append('text')
+    .attr('x', width / 2)
+    .attr('y', height - 10)
+    .attr('text-anchor', 'middle')
+    .attr('class', 'text-sm font-semibold fill-gray-700')
+    .text('Author');
 
   const colorMap = new Map();
   chart

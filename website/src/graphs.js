@@ -21,21 +21,21 @@ function loadGraphs(path) {
 function drawPapersByVenueSunburst(papersRaw) {
   d3.select('#citation-network').selectAll('*').remove();
 
-  const papers = papersRaw.filter(p => p.venue?.trim() !== '');
+  const papers = papersRaw.filter((p) => p.venue?.trim() !== '');
   const mainPaper = papersRaw[0];
   const mainPaperId = mainPaper?.paper_id;
 
   const data = { name: 'root', children: [] };
   const venueMap = new Map();
 
-  papers.forEach(p => {
+  papers.forEach((p) => {
     if (!venueMap.has(p.venue)) {
       venueMap.set(p.venue, { name: p.venue, children: [] });
     }
     venueMap.get(p.venue).children.push({
       name: p.title,
       paper_id: p.paper_id,
-      url: p.url
+      url: p.url,
     });
   });
 
@@ -43,11 +43,12 @@ function drawPapersByVenueSunburst(papersRaw) {
     mainPaper.venue = 'Unknown Venue';
   }
 
-const sortedVenues = Array.from(venueMap.values())
-  .sort((a, b) => b.children.length - a.children.length);
+  const sortedVenues = Array.from(venueMap.values()).sort(
+    (a, b) => b.children.length - a.children.length
+  );
 
-let totalPapers = 0;
-const limitedVenues = [];
+  let totalPapers = 0;
+  const limitedVenues = [];
 
   let mainPaperAdded = false;
 
@@ -68,39 +69,46 @@ const limitedVenues = [];
     if (papersFromVenue.length > 0) {
       limitedVenues.push({
         name: venue.name,
-        children: papersFromVenue
+        children: papersFromVenue,
       });
     }
   }
 
-    if (!mainPaperAdded) {
-      let added = false;
+  if (!mainPaperAdded) {
+    let added = false;
 
-      for (let venue of limitedVenues) {
-        if (venue.name === mainPaper.venue) {
-          venue.children.push({
-            name: mainPaper.title,
-            paper_id: mainPaper.paper_id,
-            url: mainPaper.url
-          });
-          totalPapers++;
-          added = true;
-          break;
-        }
-      }
-
-      if (!added) {
-        limitedVenues.push({
-          name: mainPaper.venue,
-          children: [{
-            name: mainPaper.title,
-            paper_id: mainPaper.paper_id,
-            url: mainPaper.url
-          }].concat(venueMap.get(mainPaper.venue)?.children.filter(p => p.paper_id != mainPaperId).slice(0, 9) || [])
+    for (let venue of limitedVenues) {
+      if (venue.name === mainPaper.venue) {
+        venue.children.push({
+          name: mainPaper.title,
+          paper_id: mainPaper.paper_id,
+          url: mainPaper.url,
         });
         totalPapers++;
+        added = true;
+        break;
       }
     }
+
+    if (!added) {
+      limitedVenues.push({
+        name: mainPaper.venue,
+        children: [
+          {
+            name: mainPaper.title,
+            paper_id: mainPaper.paper_id,
+            url: mainPaper.url,
+          },
+        ].concat(
+          venueMap
+            .get(mainPaper.venue)
+            ?.children.filter((p) => p.paper_id != mainPaperId)
+            .slice(0, 9) || []
+        ),
+      });
+      totalPapers++;
+    }
+  }
 
   data.children = limitedVenues;
 
@@ -110,8 +118,9 @@ const limitedVenues = [];
 
   const partition = d3.partition().size([2 * Math.PI, radius]);
 
-  const root = d3.hierarchy(data)
-    .sum(d => d.children ? 0 : 1)
+  const root = d3
+    .hierarchy(data)
+    .sum((d) => (d.children ? 0 : 1))
     .sort((a, b) => b.value - a.value);
 
   partition(root);
@@ -124,16 +133,18 @@ const limitedVenues = [];
   const highlightColor = '#FF0000';
 
   // Arc generator with larger outer radius for papers
-  const arc = d3.arc()
-    .startAngle(d => d.x0)
-    .endAngle(d => d.x1)
-    .innerRadius(d => d.y0)
-    .outerRadius(d => {
+  const arc = d3
+    .arc()
+    .startAngle((d) => d.x0)
+    .endAngle((d) => d.x1)
+    .innerRadius((d) => d.y0)
+    .outerRadius((d) => {
       if (d.depth === 2) return d.y1 + 30; // extend outer arcs
       return d.y1 - 1;
     });
 
-  const svg = d3.select('#citation-network')
+  const svg = d3
+    .select('#citation-network')
     .append('svg')
     .attr('viewBox', [0, 0, width, width])
     .attr('width', width)
@@ -141,13 +152,13 @@ const limitedVenues = [];
     .style('display', 'block')
     .style('margin', '0 auto')
     .style('font', '12px sans-serif');
-  
-  svg.attr('viewBox', [0 - margin, 0 - margin, width + 2 * margin, width + 2 * margin])
 
-  const g = svg.append('g')
-    .attr('transform', `translate(${width / 2},${width / 2})`);
+  svg.attr('viewBox', [0 - margin, 0 - margin, width + 2 * margin, width + 2 * margin]);
 
-  const tooltip = d3.select('body')
+  const g = svg.append('g').attr('transform', `translate(${width / 2},${width / 2})`);
+
+  const tooltip = d3
+    .select('body')
     .append('div')
     .attr('class', 'tooltip')
     .style('position', 'absolute')
@@ -159,9 +170,9 @@ const limitedVenues = [];
     .style('pointer-events', 'none');
 
   g.selectAll('path')
-    .data(root.descendants().filter(d => d.depth))
+    .data(root.descendants().filter((d) => d.depth))
     .join('path')
-    .attr('fill', d => {
+    .attr('fill', (d) => {
       if (d.data.paper_id === mainPaperId) return highlightColor;
       if (d.depth === 1) return colorMap.get(d.data.name) || '#ccc';
       if (d.depth === 2) {
@@ -191,9 +202,9 @@ const limitedVenues = [];
     .attr('pointer-events', 'none')
     .attr('text-anchor', 'middle')
     .selectAll('text')
-    .data(root.descendants().filter(d => d.depth > 0))
+    .data(root.descendants().filter((d) => d.depth > 0))
     .join('text')
-    .attr('transform', d => {
+    .attr('transform', (d) => {
       const angle = (((d.x0 + d.x1) / 2) * 180) / Math.PI - 90;
       const r = (d.y0 + d.y1) / 2 + (d.depth === 2 ? 5 : 0);
       return `rotate(${angle}) translate(${r},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
@@ -202,13 +213,13 @@ const limitedVenues = [];
     .style('text-anchor', 'middle')
     .style('font-size', '10px')
     .style('fill', '#fff')
-    .text(d => {
+    .text((d) => {
       const span = d.x1 - d.x0;
 
       if (d.depth === 1) {
         const words = d.data.name.split(/\s+/);
-        const acronym = words.find(w => /^[A-Z]{2,}$/.test(w));
-        const fallback = words.find(w => /^[A-Z]/.test(w) && w !== acronym);
+        const acronym = words.find((w) => /^[A-Z]{2,}$/.test(w));
+        const fallback = words.find((w) => /^[A-Z]/.test(w) && w !== acronym);
         return acronym
           ? `${acronym}${fallback ? ' (' + fallback + ')' : ''}`
           : d.data.name.slice(0, 10);

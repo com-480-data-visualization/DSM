@@ -110,7 +110,7 @@ function renderTopAuthors(papers) {
 
   const width = 500,
     height = 400,
-    margin = { top: 20, right: 20, bottom: 80, left: 80 };
+    margin = { top: 40, right: 40, bottom: 100, left: 100 };
   const svg = d3
     .select('#top-authors-chart')
     .html('')
@@ -139,6 +139,23 @@ function renderTopAuthors(papers) {
     .style('text-anchor', 'end');
 
   chart.append('g').call(d3.axisLeft(y));
+  // Y-axis label
+  svg.append('text')
+    .attr('transform', `rotate(-90)`)
+    .attr('x', -height / 2)
+    .attr('y', 15) // smaller value to bring it closer to chart
+    .attr('text-anchor', 'middle')
+    .attr('class', 'text-sm font-semibold fill-gray-700')
+    .text('Total Citations');
+
+    // X-axis label
+    svg.append('text')
+      .attr('x', width / 2)
+      .attr('y', height - 10)
+      .attr('text-anchor', 'middle')
+      .attr('class', 'text-sm font-semibold fill-gray-700')
+      .text('Author');
+
 
   const colorMap = new Map();
   chart

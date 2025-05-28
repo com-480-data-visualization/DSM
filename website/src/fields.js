@@ -82,7 +82,11 @@
 
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
-    infoPaper.textContent = 'Let\'s dive into the "' + d.paper + '" paper!';
+    if (d.paper !== '' && d.paper !== undefined) {
+      infoPaper.textContent = 'Let\'s dive into the "' + d.paper + '" paper!';
+    } else {
+      infoPaper.textContent = '';
+    }
 
     // load the graphs if the subfield has an associated paper
     d3.select('#citation-network').html('');

@@ -123,6 +123,8 @@
     "text": "Algorithms",
     "size": 30,
     "field": ["theory"],
-    "desc": "Studying step-by-step computational procedures for solving problems efficiently, including their design, analysis, optimization, and application across various domains."
+    "desc": "Studying step-by-step computational procedures for solving problems efficiently, including their design, analysis, optimization, and application across various domains.",
+    "path": "data/subfields/algorithms",
+    "paper": "Approximating k-Median via Pseudo-Approximation"
   }
 ]

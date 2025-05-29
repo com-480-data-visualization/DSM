@@ -47,7 +47,15 @@
       .font('Inter, sans-serif')
       .fontSize((d) => d.size)
       .rotate(() => 0)
-      .on('end', draw)
+      .on('end', function (words) {
+        draw(words);
+
+        // simulate click on Computer Vision so that the user sees some graphs by default
+        const defaultSubfield = words.find((d) => d.text === 'Computer Vision');
+        if (defaultSubfield) {
+          handleClick(new Event('click'), defaultSubfield);
+        }
+      })
       .start();
 
     function draw(words) {
@@ -82,9 +90,9 @@
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
     if (d.paper !== '' && d.paper !== undefined) {
-      infoPaper.textContent = 'Let\'s dive into the "' + d.paper + '" paper!';
+      infoPaper.innerHTML = `Let's dive into the "<strong>${toTitleCase(d.paper)}</strong>" paper!`;
     } else {
-      infoPaper.textContent = '';
+      infoPaper.innerHTML = '';
     }
 
     // load the graphs if the subfield has an associated paper
@@ -116,3 +124,7 @@
     return t.text === clicked.text ? 1 : 0.15;
   }
 })();
+
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}

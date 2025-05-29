@@ -1,15 +1,40 @@
-/**-------------utility functions---------------------*/
-function parseAuthors(raw) {
-  if (!raw) return [];
-  return raw
-    .split(';')
-    .map((d) => d.trim())
-    .filter((a) => a && a.length > 0 && a.toLowerCase() !== 'nan');
-}
+let venueMeta = {};
+d3.json('data/venues.json').then((d) => {
+  d.venues.forEach((v) => {
+    const key = v.name.trim().toLowerCase();
+    venueMeta[key] = v;
+  });
+});
 
-function formatNumberWithQuote(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-}
+document.addEventListener('DOMContentLoaded', () => {
+  let allData = [];
+
+  d3.csv('data/high_citations_all_dblp.csv').then((data) => {
+    allData = data.filter((d) => {
+      const vt = (d.venue_type || '').toLowerCase().trim();
+      const vn = (d.venue_name || '').toLowerCase().trim();
+      return vt !== 'book' && vn !== '' && vn !== 'n/a';
+    });
+
+    updateVisuals(5);
+
+    d3.select('#paper-limit').on('change', function () {
+      updateVisuals(+this.value);
+    });
+  });
+
+  function updateVisuals(limit) {
+    const topPapers = allData
+      .filter((d) => d.title && d.n_citation)
+      .sort((a, b) => +b.n_citation - +a.n_citation)
+      .slice(0, limit);
+
+    renderPapers(topPapers);
+    const colorMap = renderTopAuthors(topPapers);
+    renderSankey(topPapers, colorMap);
+  }
+});
+
 
 /**-------------rendering functions---------------------*/
 
@@ -35,56 +60,6 @@ function renderPapers(papers) {
         } • ${formatNumberWithQuote(Math.floor(paper.n_citation))} citations`
       );
   });
-}
-
-let lastOpenPaperId = null;
-
-function toggleDetails(paper) {
-  const detailsEl = d3.select('#paper-details');
-
-  if (lastOpenPaperId === paper.id) {
-    detailsEl.classed('hidden', true);
-    lastOpenPaperId = null;
-    return;
-  }
-
-  lastOpenPaperId = paper.id;
-  showDetails(paper);
-  detailsEl.classed('hidden', false);
-}
-
-function showDetails(paper) {
-  d3.select('#detail-title').text(paper.title);
-  d3.select('#detail-authors').text(
-    `Authors: ${parseAuthors(paper.author_name).join(', ') || 'Unknown'}`
-  );
-  d3.select('#detail-venue').text(`Venue: ${paper.venue_name || 'N/A'}`);
-  d3.select('#detail-year').text(`Year: ${paper.year || 'N/A'}`);
-  d3.select('#detail-doi').html(
-    paper.doi
-      ? `DOI Link: <a href="${paper.doi}" target="_blank" class="text-blue-600 underline">${paper.doi}</a>`
-      : `🔗 DOI: N/A`
-  );
-  const kwDiv = d3.select('#detail-keywords').html('').append('div').attr('class', 'mt-2');
-
-  if (paper.keyword) {
-    const kws = paper.keyword
-      .split(';')
-      .map((k) => k.trim())
-      .filter((k) => k);
-    const ul = kwDiv
-      .append('ul')
-      .attr('class', 'list-disc list-inside space-y-1 text-gray-700 text-sm');
-
-    ul.text('Keywords:');
-    kws.forEach((k) => {
-      ul.append('li').text(k);
-    });
-  } else {
-    kwDiv.append('p').attr('class', 'text-sm text-gray-600').text('Keywords: None');
-  }
-
-  d3.select('#paper-details').classed('opacity-0 pointer-events-none', false);
 }
 
 function renderTopAuthors(papers) {
@@ -134,17 +109,15 @@ function renderTopAuthors(papers) {
     .style('text-anchor', 'end');
 
   chart.append('g').call(d3.axisLeft(y));
-  // Y-axis label
   svg
     .append('text')
     .attr('transform', `rotate(-90)`)
     .attr('x', -height / 2)
-    .attr('y', 15) // smaller value to bring it closer to chart
+    .attr('y', 15) 
     .attr('text-anchor', 'middle')
     .attr('class', 'text-sm font-semibold fill-gray-700')
     .text('Total Citations');
 
-  // X-axis label
   svg
     .append('text')
     .attr('x', width / 2)
@@ -172,14 +145,6 @@ function renderTopAuthors(papers) {
   return colorMap;
 }
 
-let venueMeta = {};
-d3.json('data/venues.json').then((d) => {
-  d.venues.forEach((v) => {
-    const key = v.name.trim().toLowerCase();
-    venueMeta[key] = v;
-  });
-});
-
 function renderSankey(papers) {
   const width = 700,
     height = 500;
@@ -206,7 +171,7 @@ function renderSankey(papers) {
       return { source: nodeIndex.get(s), target: nodeIndex.get(t), value };
     });
 
-  // 2) Sankey layout
+
   const { nodes: Lnodes, links: Llinks } = d3
     .sankey()
     .nodeWidth(15)
@@ -333,31 +298,65 @@ function renderSankey(papers) {
     .text((d) => d.name.replace(/^A:|^V:/, ''));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  let allData = [];
+/**-------------utility functions---------------------*/
+function parseAuthors(raw) {
+  if (!raw) return [];
+  return raw
+    .split(';')
+    .map((d) => d.trim())
+    .filter((a) => a && a.length > 0 && a.toLowerCase() !== 'nan');
+}
 
-  d3.csv('data/high_citations_all_dblp.csv').then((data) => {
-    allData = data.filter((d) => {
-      const vt = (d.venue_type || '').toLowerCase().trim();
-      const vn = (d.venue_name || '').toLowerCase().trim();
-      return vt !== 'book' && vn !== '' && vn !== 'n/a';
-    });
+function formatNumberWithQuote(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+}
 
-    updateVisuals(5);
+let lastOpenPaperId = null;
 
-    d3.select('#paper-limit').on('change', function () {
-      updateVisuals(+this.value);
-    });
-  });
+function toggleDetails(paper) {
+  const detailsEl = d3.select('#paper-details');
 
-  function updateVisuals(limit) {
-    const topPapers = allData
-      .filter((d) => d.title && d.n_citation)
-      .sort((a, b) => +b.n_citation - +a.n_citation)
-      .slice(0, limit);
-
-    renderPapers(topPapers);
-    const colorMap = renderTopAuthors(topPapers);
-    renderSankey(topPapers, colorMap);
+  if (lastOpenPaperId === paper.id) {
+    detailsEl.classed('hidden', true);
+    lastOpenPaperId = null;
+    return;
   }
-});
+
+  lastOpenPaperId = paper.id;
+  showDetails(paper);
+  detailsEl.classed('hidden', false);
+}
+
+function showDetails(paper) {
+  d3.select('#detail-title').text(paper.title);
+  d3.select('#detail-authors').text(
+    `Authors: ${parseAuthors(paper.author_name).join(', ') || 'Unknown'}`
+  );
+  d3.select('#detail-venue').text(`Venue: ${paper.venue_name || 'N/A'}`);
+  d3.select('#detail-year').text(`Year: ${paper.year || 'N/A'}`);
+  d3.select('#detail-doi').html(
+    paper.doi
+      ? `DOI Link: <a href="${paper.doi}" target="_blank" class="text-blue-600 underline">${paper.doi}</a>`
+      : `🔗 DOI: N/A`
+  );
+  const kwDiv = d3.select('#detail-keywords').html('').append('div').attr('class', 'mt-2');
+
+  if (paper.keyword) {
+    const kws = paper.keyword
+      .split(';')
+      .map((k) => k.trim())
+      .filter((k) => k);
+    const ul = kwDiv
+      .append('ul')
+      .attr('class', 'list-disc list-inside space-y-1 text-gray-700 text-sm');
+
+    ul.text('Keywords:');
+    kws.forEach((k) => {
+      ul.append('li').text(k);
+    });
+  } else {
+    kwDiv.append('p').attr('class', 'text-sm text-gray-600').text('Keywords: None');
+  }
+
+  d3.select('#paper-details').classed('opacity-0 pointer-events-none', false);
+}

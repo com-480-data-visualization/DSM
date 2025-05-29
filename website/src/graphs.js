@@ -139,7 +139,7 @@ function drawPapersByVenueSunburst(papersRaw) {
     .endAngle((d) => d.x1)
     .innerRadius((d) => d.y0)
     .outerRadius((d) => {
-      if (d.depth === 2) return d.y1 + 30; // extend outer arcs
+      if (d.depth === 2) return d.y1 + 30; 
       return d.y1 - 1;
     });
 
@@ -303,7 +303,7 @@ function getMainAuthor(papersRaw, connections, limit = 20) {
 }
 
 function drawAuthorGraph(mainAuthor, papersRaw, limit = 100) {
-  const WIDTH = 1800;
+  const WIDTH = 1000;
   const HEIGHT = 600;
   const COLOR_NODE = '#007acc';
   const COLOR_MAIN = '#8e44ad';
@@ -406,7 +406,6 @@ function drawAuthorGraph(mainAuthor, papersRaw, limit = 100) {
         return;
       }
 
-      // switch active highlight
       if (activeNode) resetNodeColor(activeNode);
       activeNode = this;
       d3.select(this).attr('fill', COLOR_ACTIVE);
@@ -436,7 +435,6 @@ function drawAuthorGraph(mainAuthor, papersRaw, limit = 100) {
     })
     .call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
 
-  /* labels – mouse clicks should fall through to the circle */
   g.append('g')
     .selectAll('text')
     .data(topAuthors)

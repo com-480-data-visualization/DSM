@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }))
       .sort((a, b) => a.yValue - b.yValue);
 
-    // Adjust label y positions with vertical spacing
     let lastY = -Infinity;
     const labelPadding = 14;
 

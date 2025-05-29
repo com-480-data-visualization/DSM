@@ -112,9 +112,9 @@ function drawPapersByVenueSunburst(papersRaw) {
 
   data.children = limitedVenues;
 
-  const width = 600;
+  const width = 800;
   const radius = width / 2;
-  const margin = 50;
+  const margin = 80;
 
   const partition = d3.partition().size([2 * Math.PI, radius]);
 
@@ -151,7 +151,7 @@ function drawPapersByVenueSunburst(papersRaw) {
     .attr('height', width)
     .style('display', 'block')
     .style('margin', '0 auto')
-    .style('font', '12px sans-serif');
+    .style('font', '16px sans-serif');
 
   svg.attr('viewBox', [0 - margin, 0 - margin, width + 2 * margin, width + 2 * margin]);
 
@@ -205,14 +205,23 @@ function drawPapersByVenueSunburst(papersRaw) {
     .data(root.descendants().filter((d) => d.depth > 0))
     .join('text')
     .attr('transform', (d) => {
-      const angle = (((d.x0 + d.x1) / 2) * 180) / Math.PI - 90;
-      const r = (d.y0 + d.y1) / 2 + (d.depth === 2 ? 5 : 0);
-      return `rotate(${angle}) translate(${r},0) rotate(${angle < 90 || angle > 270 ? 0 : 180})`;
+      const mid = (d.x0 + d.x1) / 2;
+      const angle = (mid * 180) / Math.PI - 90;
+
+      if (d.depth === 1) {
+        const r = (d.y0 + d.y1) / 2;
+        const flip = angle < 90 || angle > 270 ? 0 : 180;
+        return `rotate(${angle}) translate(${r},0) rotate(${flip})`;
+      } else {
+        const r = (d.y0 + d.y1) / 2 + 5;
+        const flip = angle > 90 && angle < 270 ? 180 : 0;
+        return `rotate(${angle}) translate(${r},0) rotate(${flip})`;
+      }
     })
     .attr('dy', '0.35em')
     .style('text-anchor', 'middle')
-    .style('font-size', '10px')
-    .style('fill', '#fff')
+    .style('font-size', '12px')
+    .style('fill', '##111')
     .text((d) => {
       const span = d.x1 - d.x0;
 

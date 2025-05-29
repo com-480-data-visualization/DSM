@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
 /**-------------rendering functions---------------------*/
 
 function renderPapers(papers) {
@@ -113,7 +112,7 @@ function renderTopAuthors(papers) {
     .append('text')
     .attr('transform', `rotate(-90)`)
     .attr('x', -height / 2)
-    .attr('y', 15) 
+    .attr('y', 15)
     .attr('text-anchor', 'middle')
     .attr('class', 'text-sm font-semibold fill-gray-700')
     .text('Total Citations');
@@ -170,7 +169,6 @@ function renderSankey(papers) {
       const [s, t] = key.split('|');
       return { source: nodeIndex.get(s), target: nodeIndex.get(t), value };
     });
-
 
   const { nodes: Lnodes, links: Llinks } = d3
     .sankey()

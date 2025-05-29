@@ -139,7 +139,7 @@ function drawPapersByVenueSunburst(papersRaw) {
     .endAngle((d) => d.x1)
     .innerRadius((d) => d.y0)
     .outerRadius((d) => {
-      if (d.depth === 2) return d.y1 + 30; 
+      if (d.depth === 2) return d.y1 + 30;
       return d.y1 - 1;
     });
 

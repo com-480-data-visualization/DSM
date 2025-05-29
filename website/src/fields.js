@@ -51,9 +51,9 @@
         draw(words);
 
         // simulate click on Computer Vision so that the user sees some graphs by default
-        const defaultSubfield = words.find((d) => d.text === "Computer Vision");
+        const defaultSubfield = words.find((d) => d.text === 'Computer Vision');
         if (defaultSubfield) {
-          handleClick(new Event("click"), defaultSubfield);
+          handleClick(new Event('click'), defaultSubfield);
         }
       })
       .start();
@@ -92,7 +92,7 @@
     if (d.paper !== '' && d.paper !== undefined) {
       infoPaper.innerHTML = `Let's dive into the "<strong>${toTitleCase(d.paper)}</strong>" paper!`;
     } else {
-      infoPaper.innerHTML = "";
+      infoPaper.innerHTML = '';
     }
 
     // load the graphs if the subfield has an associated paper
@@ -126,7 +126,5 @@
 })();
 
 function toTitleCase(str) {
-  return str.replace(/\w\S*/g, (txt) =>
-    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-  );
+  return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }

@@ -1,10 +1,10 @@
 (() => {
-  /* ---------- constants ---------- */
   const FIELD_COLORS = {
     theory: '#8146ff',
     systems: '#05a653',
     ai: '#e5007d',
   };
+
   const mix = (a, b) => d3.rgb(d3.interpolateRgb(a, b)(0.5)).formatHex();
   const colour = (d) =>
     d.field.includes('root')
@@ -13,14 +13,12 @@
         ? mix(FIELD_COLORS[d.field[0]], FIELD_COLORS[d.field[1]])
         : FIELD_COLORS[d.field[0]];
 
-  /* ---------- DOM refs ---------- */
   const container = document.getElementById('cloud-container');
   const infoTitle = document.getElementById('info-title');
   const infoDesc = document.getElementById('info-desc');
   const infoPaper = document.getElementById('info-paper');
   let svg;
 
-  /* ---------- load JSON then draw ---------- */
   fetch('./data/subfields.json')
     .then((r) => r.json())
     .then((wordsData) => {
@@ -32,7 +30,6 @@
     })
     .catch((err) => console.error('Could not load wordsData.json →', err));
 
-  /* ========== drawing & interaction ========== */
   function drawCloud(wordsData) {
     const w = container.clientWidth;
     const h = container.clientHeight;
@@ -51,7 +48,7 @@
         draw(words);
 
         // simulate click on Computer Vision so that the user sees some graphs by default
-        const defaultSubfield = words.find((d) => d.text === 'Computer Vision');
+        const defaultSubfield = words.find((d) => d.text === 'System Security');
         if (defaultSubfield) {
           handleClick(new Event('click'), defaultSubfield);
         }
@@ -78,7 +75,6 @@
     }
   }
 
-  /* ========== info-panel logic ========== */
   function handleClick(event, d) {
     event.stopPropagation();
     svg
@@ -89,22 +85,38 @@
 
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
-    if (d.paper !== '' && d.paper !== undefined) {
-      infoPaper.innerHTML = `Let's dive into the "<strong>${toTitleCase(d.paper)}</strong>" paper!`;
-    } else {
-      infoPaper.innerHTML = '';
-    }
 
-    // load the graphs if the subfield has an associated paper
     d3.select('#citation-network').html('');
     d3.select('#authors-network').html('');
     document.getElementById('authors-network-container').classList.add('hidden');
     document.getElementById('citation-network-container').classList.add('hidden');
+    infoPaper.innerHTML = '';
 
     if (d.path != '' && d.path != undefined) {
-      document.getElementById('authors-network-container').classList.remove('hidden');
-      document.getElementById('citation-network-container').classList.remove('hidden');
-      loadGraphs(d.path);
+      Promise.all([d3.csv(`${d.path}/papers.csv`), d3.csv(`${d.path}/connections.csv`)]).then(
+        ([papersRaw, connections]) => {
+          const sp = papersRaw[0];
+          const authorsList = sp.authors
+            .split(';')
+            .map((s) => s.trim())
+            .join(', ');
+
+          infoPaper.innerHTML = `      
+<h2 class="text-xl font-semibold text-yellow-600 mt-8">🌟 Paper in the Spotlight</h2>
+      <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+        <a href="${sp.url}" target="_blank"
+           class="block text-lg font-bold text-yellow-800 hover:underline">
+          ${sp.title} <span class="text-sm text-gray-500">(${sp.year})</span>
+        </a>
+        <p class="mt-1 text-gray-700"><strong>Authors:</strong> ${authorsList}</p>
+        <p class="mt-1 text-gray-700"><strong>Venue:</strong> ${sp.venue}</p>
+      </div>`;
+
+          loadGraphs(papersRaw, connections);
+          document.getElementById('authors-network-container').classList.remove('hidden');
+          document.getElementById('citation-network-container').classList.remove('hidden');
+        }
+      );
     }
   }
 

@@ -1,21 +1,17 @@
-function loadGraphs(path) {
-  Promise.all([d3.csv(`${path}/papers.csv`), d3.csv(`${path}/connections.csv`)]).then(
-    ([papersRaw, connections]) => {
-      const paperIds = new Set();
-      connections.forEach((c) => {
-        paperIds.add(c.source);
-        paperIds.add(c.target);
-      });
+function loadGraphs(papersRaw, connections) {
+  const paperIds = new Set();
+  connections.forEach((c) => {
+    paperIds.add(c.source);
+    paperIds.add(c.target);
+  });
 
-      const maxPapers = paperIds.size;
-      const maxAuthors = new Set(
-        papersRaw.flatMap((p) => (p.authors || '').split(';').map((a) => a.trim()))
-      ).size;
+  const maxPapers = paperIds.size;
+  const maxAuthors = new Set(
+    papersRaw.flatMap((p) => (p.authors || '').split(';').map((a) => a.trim()))
+  ).size;
 
-      drawPapersByVenueSunburst(papersRaw);
-      drawAuthorGraph(getMainAuthor(papersRaw, connections), papersRaw);
-    }
-  );
+  drawPapersByVenueSunburst(papersRaw);
+  drawAuthorGraph(getMainAuthor(papersRaw[0]), papersRaw);
 }
 
 function drawPapersByVenueSunburst(papersRaw) {
@@ -251,63 +247,7 @@ function drawPapersByVenueSunburst(papersRaw) {
     });
 }
 
-function getMainAuthor(papersRaw, connections, limit = 20) {
-  const papers = {};
-  papersRaw.forEach((p) => {
-    papers[p.paper_id] = {
-      title: p.title,
-      year: +p.year,
-      authors: p.authors || 'Unknown author',
-      url: p.url || '#',
-    };
-  });
-
-  const citationCounts = {};
-  connections.forEach((c) => {
-    citationCounts[c.target] = (citationCounts[c.target] || 0) + 1;
-  });
-
-  const nodeMap = {};
-  const allIds = new Set();
-  connections.forEach((c) => {
-    allIds.add(c.source);
-    allIds.add(c.target);
-  });
-
-  const nodes = [];
-  allIds.forEach((id) => {
-    const paper = papers[id];
-    if (paper) {
-      const node = {
-        id,
-        title: paper.title,
-        year: paper.year,
-        authors: paper.authors,
-        url: paper.url,
-        citations: citationCounts[id] || 0,
-      };
-      nodeMap[id] = node;
-      nodes.push(node);
-    }
-  });
-
-  const links = connections.filter((c) => nodeMap[c.source] && nodeMap[c.target]);
-
-  const filteredNodes = nodes
-    .filter((n) => n.citations >= 0)
-    .sort((a, b) => b.citations - a.citations)
-    .slice(0, limit);
-
-  const filteredNodeIds = new Set(filteredNodes.map((n) => n.id));
-  const filteredLinks = links.filter(
-    (l) => filteredNodeIds.has(l.source) && filteredNodeIds.has(l.target)
-  );
-
-  const mainPaper = filteredNodes.reduce(
-    (max, n) => (n.citations > max.citations ? n : max),
-    filteredNodes[0]
-  );
-
+function getMainAuthor(mainPaper) {
   return mainPaper.authors ? mainPaper.authors.split(';')[0] || 'unknown' : 'unknown';
 }
 

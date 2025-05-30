@@ -22,109 +22,97 @@
     "size": 30,
     "field": ["systems"],
     "desc": "Focused on designing the core structural elements of computing hardware, including processor cores, memory hierarchies, and interconnects, optimizing for speed, power efficiency, and cost to maximize computational throughput.",
-    "path": "data/subfields/architecture",
-    "paper": "The microarchitecture of superscalar processors"
+    "path": "data/subfields/architecture"
   },
   {
     "text": "Distributed Computing",
     "size": 30,
     "field": ["systems"],
     "desc": "Designing and implementing systems where multiple computers coordinate and communicate over a network to collaboratively solve complex problems, improve reliability, scalability, and performance beyond what a single machine can achieve.",
-    "path": "data/subfields/blockchains",
-    "paper": "Bitcoin: A Peer-to-Peer Electronic Cash System"
+    "path": "data/subfields/blockchains"
   },
   {
     "text": "Databases",
     "size": 30,
     "field": ["systems"],
     "desc": "Designing robust systems for organizing, storing, retrieving, and managing structured and unstructured data efficiently, ensuring consistency, availability, and scalability in diverse application environments.",
-    "path": "data/subfields/databases",
-    "paper": "Data page layouts for relational databases on deep memory hierarchies"
+    "path": "data/subfields/databases"
   },
   {
     "text": "HPC",
     "size": 30,
     "field": ["systems"],
     "desc": "Utilizing parallel processing techniques and specialized hardware to solve large-scale scientific, engineering, and data-intensive problems that require significant computational power beyond standard computing capabilities.",
-    "path": "data/subfields/hpc",
-    "paper": "MapReduce: simplified data processing on large clusters"
+    "path": "data/subfields/hpc"
   },
   {
     "text": "Networks",
     "size": 30,
     "field": ["systems"],
     "desc": "Developing the protocols, architectures, and technologies that enable data exchange between devices over local and wide-area networks, focusing on performance, security, and reliability of communication.",
-    "path": "data/subfields/networks",
-    "paper": "Congestion avoidance and control"
+    "path": "data/subfields/networks"
   },
   {
     "text": "NLP",
     "size": 30,
     "field": ["ai"],
     "desc": "Creating computational methods and models that allow machines to process, understand, and generate human languages, enabling applications such as translation, sentiment analysis, and conversational agents.",
-    "path": "data/subfields/nlp",
-    "paper": "Attention is all you need"
+    "path": "data/subfields/nlp"
   },
   {
     "text": "OS",
     "size": 30,
     "field": ["systems"],
     "desc": "Building foundational software that manages hardware resources, provides abstractions for applications, handles scheduling, memory management, and input/output operations, ensuring system stability and efficiency.",
-    "path": "data/subfields/os",
-    "paper": "Disco: running commodity operating systems on scalable multiprocessors"
+    "path": "data/subfields/os"
   },
   {
     "text": "Signal Theory",
     "size": 30,
     "field": ["theory", "ai"],
     "desc": "Applying mathematical techniques to analyze, transform, and interpret signals from various sources, facilitating communication, control systems, and machine learning algorithms that depend on accurate signal processing.",
-    "path": "data/subfields/signal-theory",
-    "paper": "Adaptive filtering in subbands with critical sampling: analysis, experiments, and application to acoustic echo cancellation"
+    "path": "data/subfields/signal-theory"
   },
   {
     "text": "Software Engineering",
     "size": 30,
     "field": ["systems"],
     "desc": "Establishing systematic approaches, methodologies, and tools to design, develop, test, maintain, and improve complex software systems ensuring they meet quality, reliability, and user requirements.",
-    "path": "data/subfields/software-engineering",
-    "paper": "Microreboot - A Technique for Cheap Recovery"
+    "path": "data/subfields/software-engineering"
   },
   {
     "text": "System Security",
     "size": 30,
     "field": ["systems"],
     "desc": "Protecting computing infrastructure by identifying vulnerabilities, designing security protocols, and implementing defenses to guard against unauthorized access, data breaches, and other cyber threats.",
-    "path": "data/subfields/system-security",
-    "paper": "Code-pointer integrity"
+    "path": "data/subfields/system-security"
   },
   {
     "text": "Complexity Theory",
     "size": 30,
     "field": ["theory"],
     "desc": "Analyzing the inherent difficulty of computational problems by categorizing them according to the resources (such as time and memory) needed for their solutions, and exploring the boundaries of efficient computation.",
-    "path": "data/subfields/theory",
-    "paper": "Deterministic Communication vs. Partition Number"
+    "path": "data/subfields/theory"
   },
   {
     "text": "Computer Vision",
     "size": 30,
     "field": ["ai"],
     "desc": "Developing algorithms and systems that enable machines to interpret, analyze, and respond to visual inputs such as images and videos, powering applications like object detection, facial recognition, and autonomous navigation.",
-    "path": "data/subfields/vision",
-    "paper": "U-Net: Convolutional Networks for Biomedical Image Segmentation"
+    "path": "data/subfields/vision"
   },
   {
     "text": "Programming Languages",
     "size": 30,
     "field": ["theory", "systems"],
-    "desc": "The design, implementation, analysis, characterization, and classification of programming languages and their individual features, enabling efficient and expressive software development."
+    "desc": "The design, implementation, analysis, characterization, and classification of programming languages and their individual features, enabling efficient and expressive software development.",
+    "path": "data/subfields/programming-languages"
   },
   {
     "text": "Algorithms",
     "size": 30,
     "field": ["theory"],
     "desc": "Studying step-by-step computational procedures for solving problems efficiently, including their design, analysis, optimization, and application across various domains.",
-    "path": "data/subfields/algorithms",
-    "paper": "Approximating k-Median via Pseudo-Approximation"
+    "path": "data/subfields/algorithms"
   }
 ]

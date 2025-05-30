@@ -1,3 +1,5 @@
+const fmtInt = d3.format('d');
+
 let venueMeta = {};
 d3.json('data/venues.json').then((d) => {
   d.venues.forEach((v) => {
@@ -16,11 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return vt !== 'book' && vn !== '' && vn !== 'n/a';
     });
 
-    updateVisuals(5);
+    updateVisuals(10);
 
-    d3.select('#paper-limit').on('change', function () {
-      updateVisuals(+this.value);
-    });
+    // d3.select('#paper-limit').on('change', function () {
+    //   updateVisuals(+this.value);
+    // });
   });
 
   function updateVisuals(limit) {
@@ -33,17 +35,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const colorMap = renderTopAuthors(topPapers);
     renderSankey(topPapers, colorMap);
   }
-});
 
-/**-------------rendering functions---------------------*/
+  const slideButtons = document.querySelectorAll('[data-slide]');
+  const panels = document.querySelectorAll('.carousel-panel');
+
+  slideButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slideIndex = btn.dataset.slide;
+      const targetId = `panel-${slideIndex}`;
+      panels.forEach((p) => p.classList.add('hidden'));
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) targetPanel.classList.remove('hidden');
+
+      slideButtons.forEach((b) => {
+        const isActive = b === btn;
+
+        b.classList.toggle('text-blue-600', isActive);
+        b.classList.toggle('bg-blue-100', isActive);
+        b.classList.toggle('border-blue-300', isActive);
+        b.classList.toggle('shadow', isActive);
+
+        b.classList.toggle('text-gray-600', !isActive);
+        b.classList.toggle('bg-white', !isActive);
+        b.classList.toggle('border-gray-300', !isActive);
+        b.classList.toggle('hover:bg-gray-50', !isActive);
+        b.classList.toggle('shadow-none', !isActive);
+      });
+
+      slideButtons.forEach((b, i) => {
+        b.setAttribute('aria-selected', i.toString() === slideIndex);
+      });
+    });
+  });
+});
 
 function renderPapers(papers) {
   const container = d3.select('#top-cited-papers').html('');
+
   papers.forEach((paper, i) => {
     const div = container
       .append('div')
-      .attr('class', 'p-4 border rounded-lg hover:bg-gray-50 cursor-pointer')
-      .on('click', () => toggleDetails(paper));
+      .attr(
+        'class',
+        'paper-item p-4 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors'
+      )
+      .on('click', function () {
+        container
+          .selectAll('.paper-item')
+          .classed('bg-blue-50', false)
+          .classed('border-blue-500', false)
+          .classed('border-gray-300', true);
+
+        d3.select(this)
+          .classed('bg-blue-50', true)
+          .classed('border-blue-500', true)
+          .classed('border-gray-300', false);
+
+        toggleDetails(paper);
+      });
 
     div
       .append('p')
@@ -59,6 +108,42 @@ function renderPapers(papers) {
         } • ${formatNumberWithQuote(Math.floor(paper.n_citation))} citations`
       );
   });
+}
+
+function toggleDetails(paper) {
+  const detailsEl = d3.select('#paper-details');
+  if (lastOpenPaperId === paper.id) {
+    detailsEl.classed('hidden', true);
+    lastOpenPaperId = null;
+    return;
+  }
+
+  lastOpenPaperId = paper.id;
+  showDetails(paper);
+  detailsEl.classed('hidden', false);
+}
+
+function showDetails(paper) {
+  d3.select('#detail-title').text(paper.title);
+  d3.select('#detail-authors').text(`${parseAuthors(paper.author_name).join(', ') || 'Unknown'}`);
+  d3.select('#detail-venue').text(`${paper.venue_name || 'N/A'}`);
+  d3.select('#detail-year').text(`${fmtInt(paper.year) || 'N/A'}`);
+  d3.select('#detail-doi').html(
+    paper.doi
+      ? `<a href="${paper.doi}" target="_blank" class="text-blue-600 underline">${paper.doi}</a>`
+      : `N/A`
+  );
+
+  const kwP = d3.select('#detail-keywords').html('');
+  if (paper.keyword) {
+    const kws = paper.keyword
+      .split(';')
+      .map((k) => k.trim())
+      .filter((k) => k);
+    kwP.text(kws.join(', '));
+  } else {
+    kwP.text('None');
+  }
 }
 
 function renderTopAuthors(papers) {
@@ -310,51 +395,3 @@ function formatNumberWithQuote(num) {
 }
 
 let lastOpenPaperId = null;
-
-function toggleDetails(paper) {
-  const detailsEl = d3.select('#paper-details');
-
-  if (lastOpenPaperId === paper.id) {
-    detailsEl.classed('hidden', true);
-    lastOpenPaperId = null;
-    return;
-  }
-
-  lastOpenPaperId = paper.id;
-  showDetails(paper);
-  detailsEl.classed('hidden', false);
-}
-
-function showDetails(paper) {
-  d3.select('#detail-title').text(paper.title);
-  d3.select('#detail-authors').text(
-    `Authors: ${parseAuthors(paper.author_name).join(', ') || 'Unknown'}`
-  );
-  d3.select('#detail-venue').text(`Venue: ${paper.venue_name || 'N/A'}`);
-  d3.select('#detail-year').text(`Year: ${paper.year || 'N/A'}`);
-  d3.select('#detail-doi').html(
-    paper.doi
-      ? `DOI Link: <a href="${paper.doi}" target="_blank" class="text-blue-600 underline">${paper.doi}</a>`
-      : `🔗 DOI: N/A`
-  );
-  const kwDiv = d3.select('#detail-keywords').html('').append('div').attr('class', 'mt-2');
-
-  if (paper.keyword) {
-    const kws = paper.keyword
-      .split(';')
-      .map((k) => k.trim())
-      .filter((k) => k);
-    const ul = kwDiv
-      .append('ul')
-      .attr('class', 'list-disc list-inside space-y-1 text-gray-700 text-sm');
-
-    ul.text('Keywords:');
-    kws.forEach((k) => {
-      ul.append('li').text(k);
-    });
-  } else {
-    kwDiv.append('p').attr('class', 'text-sm text-gray-600').text('Keywords: None');
-  }
-
-  d3.select('#paper-details').classed('opacity-0 pointer-events-none', false);
-}

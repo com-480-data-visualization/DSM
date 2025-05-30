@@ -66,9 +66,9 @@ The deliverables for milestone 2 can be found here:
 **80% of the final grade**
 The deliverables for milestone 3 can be found here:
 - [**💻 Code**](website)
-- [**🎬 Screencast**](https://example.org)
-- [**📄 PDF**](process-book/milestone3.pdf)
-- [**🌐 Final visualization**](https://com-480-data-visualization.github.io/DSM/)
+- [**🎬 Screencast**](screencast.mp4)
+- [**📄 Process Book**](process-book/milestone3.pdf)
+- [**🌐 Final Visualization**](https://com-480-data-visualization.github.io/DSM/)
 
 ## Late policy
 

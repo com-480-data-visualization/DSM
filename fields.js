@@ -86,8 +86,6 @@
     infoTitle.textContent = d.text;
     infoDesc.textContent = d.desc;
 
-    d3.select('#citation-network').html('');
-    d3.select('#authors-network').html('');
     document.getElementById('authors-network-container').classList.add('hidden');
     document.getElementById('citation-network-container').classList.add('hidden');
     infoPaper.innerHTML = '';
@@ -126,6 +124,9 @@
     infoTitle.textContent = '';
     infoDesc.textContent = '';
     infoPaper.textContent = '';
+
+    document.getElementById('authors-network-container').classList.add('hidden');
+    document.getElementById('citation-network-container').classList.add('hidden');
   }
 
   function opacityRule(t, clicked) {
